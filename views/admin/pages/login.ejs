@@ -1,0 +1,64 @@
+
+
+
+
+<body class="bg-light">
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-5"> <!-- Reduced the width of the column -->
+                <div class="card">
+                    <div class="card-body p-4"> <!-- Reduced padding -->
+                      <h4 class="card-title text-center mb-4">WELCOME ADMIN!</h4><br>
+                        <% if(typeof adminCheck !=='undefined' ) { %>
+                            <div class="alert alert-danger fade show mt-0" id="message" role="alert">
+                                <%- adminCheck %>
+                            </div>
+                        <% } %>
+                        <form action="#" method="post">
+                            <!-- Email input -->
+                            <div class="form-outline">
+                                <label class="form-label" for="form1Example13">Email address</label>
+                                <input type="email" id="form1Example13" name="email" value="admin@gmail.com"
+                                    class="form-control " />
+                            </div>
+                            <br>
+                            <!-- Password input -->
+                            <div class="form-outline">
+                                <label class="form-label" for="form1Example23">Password</label>
+                                <input type="password" id="form1Example23" name="password" value="1234"
+                                    class="form-control " />
+                            </div>
+                            <br>
+                            <!-- Submit button -->
+                            <button type="submit" class="btn btn-primary btn-lg btn-block">Sign in</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .divider:after,
+        .divider:before {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: #eee;
+        }
+
+        body {
+            background-color: rgb(161, 161, 161);
+        }
+    </style>
+
+    <script>
+        const message = document.getElementById('message');
+
+        const hide = () => {
+            message.style.display = 'none';
+        }
+
+        setTimeout(hide, 3000);
+    </script>
+
