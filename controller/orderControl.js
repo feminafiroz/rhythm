@@ -2,16 +2,15 @@ const asyncHandler = require("express-async-handler");
 const {
     getOrders,
     getSingleOrder,
-    // getReview,
+    getReview,
     cancelOrderById,
     cancelSingleOrder,
     returnOrder,
-    generateInvoice,
+  
 } = require("../helpers/orderHelper");
 const OrderItem = require("../models/orderItemModel");
 
-// const pdfMake = require("pdfmake/build/pdfmake");
-// const vfsFonts = require("pdfmake/build/vfs_fonts");
+
 
 /**
  * Orders Page Route
@@ -43,12 +42,12 @@ exports.singleOrder = asyncHandler(async (req, res) => {
         const orderId = req.params.id;
 
         const { order, orders } = await getSingleOrder(orderId);
-        // const review = await getReview(req.user._id, order.product._id);
+        const review = await getReview(req.user._id, order.product._id);
         res.render("users/pages/single-order", {
             title: order.product.title,
             page: order.product.title,
             order,
-            // review,
+            review,
             orders,
         });
     } catch (error) {
@@ -115,28 +114,3 @@ exports.returnOrder = asyncHandler(async (req, res) => {
     }
 });
 
-/**
- * Download Invoice
- * Method GET
- */
-exports.donwloadInvoice = asyncHandler(async (req, res) => {
-    try {
-        const orderId = req.params.id;
-
-        const data = await generateInvoice(orderId);
-        pdfMake.vfs = vfsFonts.pdfMake.vfs;
-
-        // Create a PDF document
-        const pdfDoc = pdfMake.createPdf(data);
-
-        // Generate the PDF and send it as a response
-        pdfDoc.getBuffer((buffer) => {
-            res.setHeader("Content-Type", "application/pdf");
-            res.setHeader("Content-Disposition", `attachment; filename=invoices.pdf`);
-
-            res.end(buffer);
-        });
-    } catch (error) {
-        throw new Error(error);
-    }
-});

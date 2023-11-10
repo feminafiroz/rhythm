@@ -38,7 +38,7 @@ const insertCategory = expressHandler(async (req, res) => {
             });
             await result.save();
 
-            res.render('./admin/pages/categories', {
+            res.render('./admin/pages/addCategory', {
                 message: `Category ${categoryName} added successfully`,
                 title: 'addCategory',
             });

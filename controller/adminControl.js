@@ -40,7 +40,7 @@ const verifyAdmin = expressHandler(async(req,res)=>{
          if(email === email && req.body.password === password){
               
               req.session.admin = email; 
-            res.render('./admin/pages/index',{title:'dashboard'})
+            res.redirect('/admin/dashboard')
          }else{
             res.render('./admin/pages/login', {adminCheck: 'Invalid Credentials',title:'Login'})
          }
@@ -52,68 +52,57 @@ const verifyAdmin = expressHandler(async(req,res)=>{
 
 
 // loadDashboard---  
-const loadDashboard = expressHandler(async(req,res)=>{
-   try {
-    const messages = req.flash();
-    const user = req?.user;
-    const recentOrders = await Order.find()
-        .limit(5)
-        .populate({
-            path: "user",
-            select: "firstName lastName image",
-        })
-        .populate("orderItems")
-        .select("totalAmount orderedDate totalPrice")
-        .sort({ _id: -1 });
+const loadDashboard = expressHandler(async (req, res) => {
+    try {
+        console.log("sdfxhcg,bhj.kl/.j,hgfnbxdvzfxcgn,hjk./lj.h,gfnbxcgnvbhmj,nkm")
+        const messages = req.flash();
+        const user = req?.user;
+        const recentOrders = await Order.find()
+            .limit(5)
+            .populate({
+                path: "user",
+                select: "firstName lastName image",
+            })
+            .populate("orderItems")
+            .select("totalAmount orderedDate totalPrice")
+            .sort({ _id: -1 });
 
-    //
-    let totalSalesAmount = recentOrders.reduce((total, order) => {
-        const nonCancelledItems = order.orderItems.filter(
-            (item) => item.status === status.delivered || item.status === status.shipped
-        );
+        let totalSalesAmount = 0;
+        recentOrders.forEach((order) => {
+            totalSalesAmount += order.totalPrice;
+        });
 
-        if (nonCancelledItems.length > 0) {
-            const totalPrice = nonCancelledItems.reduce((acc, item) => {
-                return acc + parseFloat(item.price);
-            }, 0);
-            return total + totalPrice;
-        } else {
-            return total;
-        }
-    }, 0);
+        totalSalesAmount = numeral(totalSalesAmount).format("0.0a");
 
-    totalSalesAmount = numeral(totalSalesAmount).format("0.0a");
-
-    const totalSoldProducts = await Product.aggregate([
-        {
-            $group: {
-                _id: null,
-                total_sold_count: {
-                    $sum: "$sold",
+        const totalSoldProducts = await Product.aggregate([
+            {
+                $group: {
+                    _id: null,
+                    total_sold_count: {
+                        $sum: "$sold",
+                    },
                 },
             },
-        },
-    ]);
+        ]);
 
-    const totalOrderCount = await Order.countDocuments();
-    const totalActiveUserCount = await User.countDocuments({ isBlocked: false });
+        const totalOrderCount = await Order.countDocuments();
+        const totalActiveUserCount = await User.countDocuments({ isBlock: false });
 
-    res.render('./admin/pages/index', {
-        title: "Dashboard",
-        user,
-        messages,
-        recentOrders,
-        totalOrderCount,
-        totalActiveUserCount,
-        totalSalesAmount,
-        moment,
-        totalSoldProducts: totalSoldProducts[0].total_sold_count,
-    });
-} catch (error) {
-    throw new Error(error);
-}
+        res.render("admin/pages/dashboard", {
+            title: "Dashboard",
+            user,
+            messages,
+            recentOrders,
+            totalOrderCount,
+            totalActiveUserCount,
+            totalSalesAmount,
+            moment,
+            totalSoldProducts: totalSoldProducts[0].total_sold_count,
+        });
+    } catch (error) {
+        throw new Error(error);
+    }
 });
-
 
 
 
@@ -374,7 +363,7 @@ const couponspage = expressHandler(async (req, res) => {
 const createCoupon = expressHandler(async (req, res) => {
     try {
         const existingCoupon = await Coupon.findOne({ code: req.body.code });
-
+        const messages = req.flash();
         console.log(req.body);
 
         if (!existingCoupon) {
@@ -390,7 +379,7 @@ const createCoupon = expressHandler(async (req, res) => {
             res.redirect("/admin/coupon");
         }
         req.flash("warning", "Coupon exists with same code");
-        res.render("admin/pages/addCoupon", { title: "Add Coupon", messages, data: req.body });
+        res.render("admin/pages/addCoupon", { title: "Add Coupon", messages:req.flash(), data: req.body });
     } catch (error) {
         throw new Error(error);
     }
@@ -431,7 +420,6 @@ const updateCoupon = expressHandler(async (req, res) => {
     } catch (error) {}
 });
 
-
 const salesReportpage = expressHandler(async (req, res) => {
     try {
         res.render("admin/pages/sales-report", { title: "Sales Report" });
@@ -439,6 +427,7 @@ const salesReportpage = expressHandler(async (req, res) => {
         throw new Error(error);
     }
 });
+
 const generateSalesReport = async (req, res, next) => {
     try {
         const fromDate = new Date(req.query.fromDate);
@@ -462,29 +451,29 @@ const getSalesData = async (req, res) => {
         const pipeline = [
             {
                 $project: {
-                    year: { $year: "$orderedDate" },
-                    month: { $month: "$orderedDate" },
+                    week: { $isoWeek: "$orderedDate" },
+                    year: { $isoWeekYear: "$orderedDate" },
                     totalPrice: 1,
                 },
             },
             {
                 $group: {
-                    _id: { year: "$year", month: "$month" },
+                    _id: { year: "$year", week: "$week" },
                     totalSales: { $sum: "$totalPrice" },
                 },
             },
             {
                 $project: {
                     _id: 0,
-                    month: {
+                    week: {
                         $concat: [
                             { $toString: "$_id.year" },
-                            "-",
+                            "-W",
                             {
                                 $cond: {
-                                    if: { $lt: ["$_id.month", 10] },
-                                    then: { $concat: ["0", { $toString: "$_id.month" }] },
-                                    else: { $toString: "$_id.month" },
+                                    if: { $lt: ["$_id.week", 10] },
+                                    then: { $concat: ["0", { $toString: "$_id.week" }] },
+                                    else: { $toString: "$_id.week" },
                                 },
                             },
                         ],
@@ -494,14 +483,15 @@ const getSalesData = async (req, res) => {
             },
         ];
 
-        const monthlySalesArray = await Order.aggregate(pipeline);
+        const weeklySalesArray = await Order.aggregate(pipeline);
 
-        res.json(monthlySalesArray);
+        res.json(weeklySalesArray);
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: "Internal Server Error" });
     }
 };
+
 
 
 module.exports = {

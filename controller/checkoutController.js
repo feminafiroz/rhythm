@@ -22,6 +22,7 @@ const checkoutpage = asyncHandler(async (req, res) => {
         const cartItems = await checkoutHelper.getCartItems(userid);
         const cartData = await Cart.findOne({ user: userid });
         let wallet = await Wallet.findOne({ user: userid });
+     
         const coupon =
             (await Coupon.findOne({ code: req?.session?.coupon?.code, expiryDate: { $gt: Date.now() } })) || null;
         const availableCoupons = await Coupon.find({ expiryDate: { $gt: Date.now() } })
@@ -218,7 +219,8 @@ const orderPlaced = asyncHandler(async (req, res) => {
                 await coupon.save();
             }
             const wallet = await Wallet.findOne({ user: req.user._id });
-            wallet.balance = 0;
+         
+            wallet.balance -= order.wallet;
             await wallet.save();
         } else if (order.payment_method === "wallet_payment") {
             for (const item of order.orderItems) {
@@ -230,7 +232,7 @@ const orderPlaced = asyncHandler(async (req, res) => {
                 await coupon.save();
             }
             const wallet = await Wallet.findOne({ user: req.user._id });
-            wallet.balance -= order.totalPrice;
+            wallet.balance -= order.wallet;
             await wallet.save();
         }
         if (cartItems) {
@@ -265,10 +267,15 @@ const verifyPayment = asyncHandler(async (req, res) => {
         const { razorpay_payment_id, razorpay_order_id, razorpay_signature, orderId, walletAmount, userId } = req.body;
         const result = await checkoutHelper.verifyPayment(
             razorpay_payment_id,
-            razorpay_order_id,
+            razorpay_order_id,  
             razorpay_signature,
             orderId
+           
         );
+        // for(let i=0;i<100;i++){
+        //     console.log(razorpay_payment_id, razorpay_order_id, razorpay_signature, orderId, walletAmount, userId)
+        // }
+        
 
         if (result) {
             const wallet = await Wallet.findOneAndUpdate(
@@ -277,6 +284,7 @@ const verifyPayment = asyncHandler(async (req, res) => {
                     balance: walletAmount,
                 }
             );
+           
         }
 
         res.json(result);

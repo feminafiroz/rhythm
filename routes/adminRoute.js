@@ -22,7 +22,7 @@ adminRoute.post('/', adminController.verifyAdmin);
 adminRoute.get('/logout', isAdminLoggedIn, adminController.logout)
 
 // adminController.userManagement---
-adminRoute.get('/dashboard', isAdminLoggedIn, adminController.loadDashboard)
+adminRoute.get('/dashboard', adminController.loadDashboard)
 adminRoute.get('/user', isAdminLoggedIn, adminController.userManagement)
 adminRoute.post('/user/search', isAdminLoggedIn, adminController.searchUser)
 adminRoute.post('/user/blockUser/:id', isAdminLoggedIn, adminController.blockUser)
@@ -79,7 +79,7 @@ adminRoute.post("/coupon/edit/:id", adminController.updateCoupon);
 
 
 adminRoute.get("/sales-report", adminController.salesReportpage);
-adminRoute.get("/sales-data", adminController.getSalesData);
+adminRoute.get("/sales-data-weekly", adminController.getSalesData);
 adminRoute.get("/get/sales-report", adminController.generateSalesReport);
 
 adminRoute.use((req, res) => {

@@ -5,8 +5,9 @@ const OrderItem = require("../models/orderItemModel");
 const { status } = require("../utility/status"); 
 const Wallet = require("../models/walletModel");
 const WalletTransactoins = require("../models/walletTransactionModel");
-// const Review = require("../../models/reviewModel");
+const Review = require("../models/reviewModel");
 const Coupon = require("../models/couponModel");
+const user = require("../models/userModel");
 
 module.exports = {
     getOrders: asyncHandler(async (userId) => {
@@ -94,6 +95,86 @@ module.exports = {
         }
     }),
 
+    // cancelSingleOrder: asyncHandler(async (orderItemId, userId) => {
+    //     const updatedOrder = await OrderItem.findByIdAndUpdate(orderItemId, {
+    //         status: status.cancelled,
+    //     });
+
+    //     if (updatedOrder.isPaid !== "pending") {
+    //         const cancelledProduct = await Product.findById(updatedOrder.product);
+    //         cancelledProduct.quantity += updatedOrder.quantity;
+    //         cancelledProduct.sold -= updatedOrder.quantity;
+    //         await cancelledProduct.save();
+    //     }
+
+    //     const orders = await Order.findOne({ orderItems: orderItemId });
+    //     if (
+    //         (orders.payment_method === "online_payment" || orders.payment_method === "wallet_payment") &&
+    //         updatedOrder.isPaid === "paid"
+    //     ) {
+    //         const wallet = await Wallet.findOne({ user: userId });
+    //         const orderTotal = parseInt(updatedOrder.price) * updatedOrder.quantity;
+    //         const order = await Order.findOne({ orderItems: orderItemId });
+    //         const appliedCoupon = order.coupon;
+    //         if (!wallet) {
+    //             let amountToBeRefunded = 0;
+    //             if (appliedCoupon.type === "fixedAmount") {
+    //                 const percentage = Math.round((orderTotal / (orders.totalPrice + orders.discount)) * 100);
+    //                 const returnAmount = orderTotal - (appliedCoupon.value * percentage) / 100;
+    //                 amountToBeRefunded = returnAmount;
+    //             } else if (appliedCoupon.type === "percentage") {
+    //                 const returnAmount = orderTotal - (orderTotal * appliedCoupon.value) / 100;
+    //                 amountToBeRefunded = returnAmount;
+    //             }
+    //             const newWallet = await Wallet.create({
+    //                 balance: amountToBeRefunded,
+    //                 user: orders.user,
+    //             });
+    //             const walletTransaction = await WalletTransactoins.create({
+    //                 wallet: newWallet._id,
+    //                 event: "Refund",
+    //                 orderId: order.orderId,
+    //                 amount: amountToBeRefunded,
+    //                 type: "credit",
+    //             });
+    //         } else {
+    //             let amountToBeRefunded = 0;
+    //             if (appliedCoupon.type === "fixedAmount") {
+    //                 const percentage = Math.round((orderTotal / (orders.totalPrice + orders.discount)) * 100);
+    //                 const returnAmount = orderTotal - (appliedCoupon.value * percentage) / 100;
+    //                 amountToBeRefunded = returnAmount;
+    //             } else if (appliedCoupon.type === "percentage") {
+    //                 const returnAmount = orderTotal - (orderTotal * appliedCoupon.value) / 100;
+    //                 amountToBeRefunded = returnAmount;
+    //             }
+    //             const existingWallet = await Wallet.findOneAndUpdate({ user: userId });
+    //             existingWallet.balance += amountToBeRefunded;
+    //             existingWallet.save();
+
+    //             const walletTransaction = await WalletTransactoins.create({
+    //                 wallet: existingWallet._id,
+    //                 amount: amountToBeRefunded,
+    //                 event: "Refund",
+    //                 orderId: order.orderId,
+    //                 type: "credit",
+    //             });
+    //         }
+    //     }
+    //     return "redirectBack";
+    // }),
+
+    // returnOrder: asyncHandler(async (returnOrderId) => {
+    //     const returnOrder = await OrderItem.findByIdAndUpdate(returnOrderId, {
+    //         status: status.returnPending,
+    //     });
+
+    //     return "redirectBack";
+    // }),
+
+ 
+
+
+   
     cancelSingleOrder: asyncHandler(async (orderItemId, userId) => {
         const updatedOrder = await OrderItem.findByIdAndUpdate(orderItemId, {
             status: status.cancelled,
@@ -116,47 +197,80 @@ module.exports = {
             const order = await Order.findOne({ orderItems: orderItemId });
             const appliedCoupon = order.coupon;
             if (!wallet) {
-                let amountToBeRefunded = 0;
-                if (appliedCoupon.type === "fixedAmount") {
-                    const percentage = Math.round((orderTotal / (orders.totalPrice + orders.discount)) * 100);
-                    const returnAmount = orderTotal - (appliedCoupon.value * percentage) / 100;
-                    amountToBeRefunded = returnAmount;
-                } else if (appliedCoupon.type === "percentage") {
-                    const returnAmount = orderTotal - (orderTotal * appliedCoupon.value) / 100;
-                    amountToBeRefunded = returnAmount;
+                if (order.coupon) {
+                    let amountToBeRefunded = 0;
+                    if (appliedCoupon.type === "fixedAmount") {
+                        const percentage = Math.round((orderTotal / (orders.totalPrice + orders.discount)) * 100);
+                        const returnAmount = orderTotal - (appliedCoupon.value * percentage) / 100;
+                        amountToBeRefunded = returnAmount;
+                    } else if (appliedCoupon.type === "percentage") {
+                        const returnAmount = orderTotal - (orderTotal * appliedCoupon.value) / 100;
+                        amountToBeRefunded = returnAmount;
+                    }
+                    const newWallet = await Wallet.create({
+                        balance: amountToBeRefunded,
+                        user: orders.user,
+                    });
+                    const walletTransaction = await WalletTransactoins.create({
+                        wallet: newWallet._id,
+                        event: "Refund",
+                        orderId: order.orderId,
+                        amount: amountToBeRefunded,
+                        type: "credit",
+                    });
+                } else {
+                    const newWallet = await Wallet.create({
+                        balance: orderTotal,
+                        user: orders.user,
+                    });
+                    const walletTransaction = await WalletTransactoins.create({
+                        wallet: newWallet._id,
+                        event: "Refund",
+                        orderId: order.orderId,
+                        amount: orderTotal,
+                        type: "credit",
+                    });
                 }
-                const newWallet = await Wallet.create({
-                    balance: amountToBeRefunded,
-                    user: orders.user,
-                });
-                const walletTransaction = await WalletTransactoins.create({
-                    wallet: newWallet._id,
-                    event: "Refund",
-                    orderId: order.orderId,
-                    amount: amountToBeRefunded,
-                    type: "credit",
-                });
             } else {
-                let amountToBeRefunded = 0;
-                if (appliedCoupon.type === "fixedAmount") {
-                    const percentage = Math.round((orderTotal / (orders.totalPrice + orders.discount)) * 100);
-                    const returnAmount = orderTotal - (appliedCoupon.value * percentage) / 100;
-                    amountToBeRefunded = returnAmount;
-                } else if (appliedCoupon.type === "percentage") {
-                    const returnAmount = orderTotal - (orderTotal * appliedCoupon.value) / 100;
-                    amountToBeRefunded = returnAmount;
-                }
-                const existingWallet = await Wallet.findOneAndUpdate({ user: userId });
-                existingWallet.balance += amountToBeRefunded;
-                existingWallet.save();
+                if (order.coupon) {
+                    let amountToBeRefunded = 0;
+                    if (appliedCoupon.type === "fixedAmount") {
+                        const percentage = Math.round((orderTotal / (orders.totalPrice + orders.discount)) * 100);
+                        const returnAmount = orderTotal - (appliedCoupon.value * percentage) / 100;
+                        amountToBeRefunded = returnAmount;
+                    } else if (appliedCoupon.type === "percentage") {
+                        const returnAmount = orderTotal - (orderTotal * appliedCoupon.value) / 100;
+                        amountToBeRefunded = returnAmount;
+                    }
+                    const existingWallet = await Wallet.findOneAndUpdate({ user: userId });
+                    existingWallet.balance += amountToBeRefunded;
 
-                const walletTransaction = await WalletTransactoins.create({
-                    wallet: existingWallet._id,
-                    amount: amountToBeRefunded,
-                    event: "Refund",
-                    orderId: order.orderId,
-                    type: "credit",
-                });
+                    existingWallet.save();
+
+                    const walletTransaction = await WalletTransactoins.create({
+                        wallet: existingWallet._id,
+                        amount: amountToBeRefunded,
+                        event: "Refund",
+                        orderId: order.orderId,
+                        type: "credit",
+                    });
+                } else {
+                    const existingWallet = await Wallet.findOneAndUpdate({ user: userId });
+                    console.log('user id ===========================================',userId);
+
+                existingWallet.balance += orderTotal;
+                   
+                    
+                    existingWallet.save();
+
+                    const walletTransaction = await WalletTransactoins.create({
+                        wallet: existingWallet._id,
+                        amount: orderTotal,
+                        event: "Refund",
+                        orderId: order.orderId,
+                        type: "credit",
+                    });
+                }
             }
         }
         return "redirectBack";
@@ -170,17 +284,16 @@ module.exports = {
         return "redirectBack";
     }),
 
-    // getReview: asyncHandler(async (userId, productId) => {
-    //     const review = await Review.findOne({ user: userId, product: productId });
-    //     if (review) {
-    //         return review;
-    //     } else {
-    //         return {};
-    //     }
-    // }),
+    getReview: asyncHandler(async (userId, productId) => {
+        const review = await Review.findOne({ user: userId, product: productId });
+        if (review) {
+            return review;
+        } else {
+            return {};
+        }
+    }),
 
-
-    // generateInvoice: asyncHandler(async (orderId) => {
+     // generateInvoice: asyncHandler(async (orderId) => {
     //     const order = await OrderItem.findById(orderId).populate("product");
     //     const orders = await Order.findOne({ orderItems: order._id });
 
@@ -296,5 +409,6 @@ module.exports = {
 
     //     return data;
     // }),
+
 };
  

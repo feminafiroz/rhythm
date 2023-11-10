@@ -5,7 +5,7 @@
 //     element.style.display = 'none';
 // }
 
-console.log("asthrullah");
+
 
 function displayError(inputField, message) {
     console.log("2")
@@ -42,8 +42,8 @@ function validateProductForm() {
         displayError(productPriceInput, "Product price Cannot be less be 1 rupees");
         return false; // Prevent form submission
     }
-    if (salePriceInput.value < 0) {
-        displayError(salePriceInput, " Sale price Cannot be less than  1 rupees");
+    if ((salePriceInput.value < 0 ) || (salePriceInput.value > productPriceInput.value)) {
+        displayError(salePriceInput, " Sale price is invalid ");
         return false; // Prevent form submission
     }
     if (quantityInput.value <= 0) {

@@ -95,6 +95,13 @@
         table.className = "table table-bordered table-striped";
         const thead = document.createElement("thead");
         const headerRow = document.createElement("tr");
+
+        // Add a column for the serial number
+        const serialNumberHeader = document.createElement("th");
+        serialNumberHeader.textContent = "Serial No";
+        serialNumberHeader.style.textAlign = "center";
+        headerRow.appendChild(serialNumberHeader);
+
         for (const key in data[0]) {
             if (data[0].hasOwnProperty(key)) {
                 const th = document.createElement("th");
@@ -106,8 +113,19 @@
         thead.appendChild(headerRow);
         table.appendChild(thead);
         const tbody = document.createElement("tbody");
+
+          // Initialize a serial number counter
+          let serialNumber = 1;
+
         data.forEach((item) => {
             const row = document.createElement("tr");
+
+            // Add a cell for the serial number
+            const serialNumberCell = document.createElement("td");
+            serialNumberCell.textContent = serialNumber;
+            serialNumberCell.style.textAlign = "center";
+            row.appendChild(serialNumberCell);
+
             for (const key in item) {
                 if (item.hasOwnProperty(key)) {
                     const cell = document.createElement("td");
@@ -121,6 +139,8 @@
                 }
             }
             tbody.appendChild(row);
+            // Increment the serial number for the next row
+            serialNumber++;
         });
         table.appendChild(tbody);
         return table;

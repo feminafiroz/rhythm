@@ -58,7 +58,7 @@
                                         </div>
                                     </div>
                                     <% }) %> <% } else { %> No Address Found
-                                    <a class="btn btn-dark h-auto" href="/addAddress">Add Address</a>
+                                    <!-- <a class="btn btn-dark h-auto" href="/addAddress">Add Address</a> -->
                                     <% } %>
                                 </div>
                             </div>
@@ -468,6 +468,9 @@
                 userId: responseData.user._id,
                 walletAmount: response.walletamount,
             };
+           
+                
+      
 
             fetch(`/verify-payment`, {
                 method: "POST",

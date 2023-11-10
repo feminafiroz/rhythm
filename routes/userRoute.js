@@ -51,7 +51,9 @@ userRoute.get('/wishlist', ensureAuthenticated, userController.wishlist);
 userRoute.get('/addTo-wishlist/:id', validateID, ensureAuthenticated, userController.addTowishlist);
 userRoute.get('/removeWishlist/:id', validateID, ensureAuthenticated, userController.removeItemfromWishlist);
 
+userRoute.post("/review/add/:id", ensureAuthenticated,userController.addReview);
 
+userRoute.get("/wallet/:id",ensureAuthenticated, userController.walletTransactionspage);
 
 // // cart_section-- 
 userRoute.get('/cart', ensureAuthenticated, cartController.cartpage);
