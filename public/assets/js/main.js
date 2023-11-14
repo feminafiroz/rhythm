@@ -359,7 +359,7 @@
         autoplayTimeout: 5000,
         item: 4,
         margin: 57,
-        navText: ['<img src="assets/img/icon-img/left.png">', '<img src="assets/img/icon-img/right.png">'],
+        navText: ['<img src="assets/img/icon-img/255.png">', '<img src="assets/img/icon-img/25.png">'],
         responsive: {
             0: {
                 items: 1
@@ -385,7 +385,7 @@
         autoplayTimeout: 5000,
         item: 4,
         margin: 22,
-        navText: ['<img src="assets/img/icon-img/left.png">', '<img src="assets/img/icon-img/right.png">'],
+        navText: ['<img src="assets/img/icon-img/255.png">', '<img src="assets/img/icon-img/25.png">'],
         responsive: {
             0: {
                 items: 1
@@ -653,68 +653,7 @@
     /*---------------------
     price slider
     --------------------- */
-    // var sliderrange = $('#slider-range');
-    // var amountprice = $('#amount');
-    // $(function() {
-    //     sliderrange.slider({
-    //         range: true,
-    //         min: 20,
-    //         max: 100,
-    //         values: [0, 100],
-    //         slide: function(event, ui) {
-    //             amountprice.val("$" + ui.values[0] + " - $" + ui.values[1]);
-    //         }
-    //     });
-    //     amountprice.val("$" + sliderrange.slider("values", 0) +
-    //         " - $" + sliderrange.slider("values", 1));
-    // });
-
-    // var sliderrange = $('#slider-range');
-    // var amountprice = $('#amount');
-    // $(function () {
-    //     // Initialize the price range slider
-    //     sliderrange.slider({
-    //         range: true,
-    //         min: 3000,   // Set the minimum price to 3000
-    //         max: 100000, // Set the maximum price to 100000
-    //         values: [3000, 100000], // Set initial min and max values
-    //         step: 100, // Set step value
-    //         slide: function (event, ui) {
-    //             amountprice.val("₹" + ui.values[0] +" - ₹" + ui.values[1]);
-    //         },
-    //     });
-    
-    //     // Get the initial price values
-    //     const initialMinPrice = $("#slider-range").slider("values", 0);
-    //     const initialMaxPrice = $("#slider-range").slider("values", 1);
-    // console.log("1")
-    //     // Add an event listener for the "Filter" button
-    //     $("#filter-button").on("click", function () {
-    //         console.log("inside the price filtering frontend");
-    //         const minPrice = $("#slider-range").slider("values", 0);
-    //         const maxPrice = $("#slider-range").slider("values", 1);
-    // console.log("2")
-    //         // Now you can use the 'minPrice' and 'maxPrice' for filtering your product data
-    //         // Send these values to your server for product filtering
-    //         console.log("Min Price: ₹" + minPrice);
-    //         console.log("Max Price: ₹" + maxPrice);
-    //         console.log("3")
-    
-    //         fetch(`/shop?minPrice=${minPrice}&maxPrice=${maxPrice}`)
-    //             .then((response) => response.json())
-    //             .then((filteredProducts) => {
-    //                 // Update the product list on the front end with the filtered data
-    //                 updateProductList(filteredProducts);
-    //             });
-
-    // console.log("4")
-
-    //     });
-    
-    //     // Initialize the input field with the initial values
-    //     $("#amount").val("₹" + initialMinPrice + " - ₹" + initialMaxPrice);
-  
-    
+ 
     
     /*--------------------------
         09. ScrollUp

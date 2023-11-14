@@ -8286,16 +8286,16 @@ a.bundle-btn {
     transform: translateY(-50%);
 }
 .about-logo h3 {
-    background-color: #050035;
+    background-color: #000;
     border-radius: 100%;
     color: #fff;
     font-size: 40px;
     font-weight: bold;
     margin: 0;
-    position: relative;
+    position: absolute;
     right: 0;
     text-align: center;
-    text-transform: uppercase;
+    /* text-transform: uppercase; */
     display: inline-block;
     width: 185px;
     height: 185px;

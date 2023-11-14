@@ -8,14 +8,14 @@
 
 
 function displayError(inputField, message) {
-    console.log("2")
+   
     const errorMessage = inputField.nextElementSibling;
     if (errorMessage && errorMessage.classList.contains('error-message')) {
         errorMessage.textContent = message;
         errorMessage.style.color = 'red';
         setTimeout(function () {
             hideError(inputField);
-            console.log("3")
+         
         }, 5000);
     }
 }

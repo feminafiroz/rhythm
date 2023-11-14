@@ -2,12 +2,7 @@
     <div class="container">
         <div class="breadcrumb-content text-center pt-1">
             <ul>
-                <li>
-                    <h3 style="color: white;"><a href="/" >Home</a></h3>
-                </li>
-                <li>
-                    <h3 style="color: white;">/</h3>
-                </li>
+               
                 <li>
                     <h3 style="color: white;">Product</h3>
                 </li>
@@ -127,7 +122,7 @@
                                 <% if (userWishlist) { %>
                                     <a class=" btn-hover animate-left"
                                         id="wishlist" href=""
-                                        onclick="addTowishlist(`<%= product._id %>`)">
+                                        onclick="toggleWishlist(`<%= product._id %>`)">
 
                                             <% if (userWishlist.includes(product._id))
                                             { %>
@@ -152,6 +147,7 @@
                             <li class="categories-title">Category :</li>
                             <li><a href="#">
                                     <%= product.categoryName.categoryName %>
+                                    
                                 </a></li>
                         </ul>
                     </div>

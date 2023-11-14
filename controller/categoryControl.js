@@ -55,10 +55,10 @@ const list = expressHandler(async (req, res) => {
     try {
 
         const id = req.params.id
-        console.log(id);
+       
 
         const listing = await category.findByIdAndUpdate({ _id: id }, { $set: { isListed: true } })
-        console.log(listing);
+      
         res.redirect('/admin/category')
 
     } catch (error) {
@@ -70,10 +70,7 @@ const list = expressHandler(async (req, res) => {
 const unList = expressHandler(async (req, res) => {
     try {
         const id = req.params.id
-        console.log(id);
-       
         const listing = await category.findByIdAndUpdate({ _id: id }, { $set: { isListed: false } })
-        console.log(listing);
         res.redirect('/admin/category')
 
     } catch (error) {
@@ -103,7 +100,6 @@ const updateCategory = expressHandler(async (req, res) => {
     try {
         const id = req.params.id
         const updatedName = req.body.updatedName
-        console.log(updatedName);
         await category.findByIdAndUpdate(id, { $set: { categoryName: updatedName } })
         res.redirect('/admin/category')
     } catch (error) {

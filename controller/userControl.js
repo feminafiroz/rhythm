@@ -6,7 +6,7 @@ const { sendOtp, generateOTP } = require('../utility/nodeMailer')
 const crypto = require('crypto')
 const bcrypt = require('bcrypt')
 const Review = require('../models/reviewModel')
-const Wallet=require('../models/walletModel')
+const Wallet = require('../models/walletModel')
 const WalletTransaction = require("../models/walletTransactionModel");
 
 
@@ -14,7 +14,6 @@ const WalletTransaction = require("../models/walletTransactionModel");
 const loadLandingPage = asyncHandler(async (req, res) => {
     try {
         const products = await Product.find({ isListed: true }).populate('images').limit(5)
-        console.log("home page")
         res.render('./users/pages/index', { products: products })
     } catch (error) {
         throw new Error(error)
@@ -47,8 +46,8 @@ const insertUser = async (req, res) => {
             const OTP = generateOTP() /** otp generating **/
             const expirationTime = new Date();
             expirationTime.setMinutes(expirationTime.getMinutes() + 1); // Set OTP expiration time to 1 minutes from now
-            
-            req.session.otpUser = { ...UserData, otp: OTP,expirationTime };
+
+            req.session.otpUser = { ...UserData, otp: OTP, expirationTime };
             console.log(req.session.otpUser.otp)
             // req.session.mail = req.body.email;  
 
@@ -77,37 +76,7 @@ const sendOTPpage = asyncHandler(async (req, res) => {
 
 })
 
-// verifyOTP route handler
-// const verifyOTP = asyncHandler(async (req, res) => {
-//     try {
 
-//         // const otp = generateOTP();
-//         // req.session.otpUser = otp;
-        
-//         const enteredOTP = req.body.otp;
-//         const email = req.session.otpUser.email
-//         const storedOTP = req.session.otpUser.otp; // Getting the stored OTP from the session
-//         console.log(storedOTP);
-//         const user = req.session.otpUser;
-
-//         if (enteredOTP == storedOTP) {
-//             const newUser = await User.create(user);
-
-//             delete req.session.otpUser.otp;
-//             res.redirect('/login');
-//         } else {
-            
-//            const messages = 'Verification failed, please check the OTP or resend it.';
-//             console.log('verification failed');
-
-//         }
-//         res.render('./users/pages/verifyOTP', { messages,email})
-
-
-//     } catch (error) {
-//         throw new Error(error);
-//     }
-// });
 
 // verifyOTP route handler
 
@@ -230,202 +199,121 @@ const userProfile = async (req, res) => {
         const user = req.user;
         console.log(user);
         const wallet = await Wallet.findOne({ user: user._id });
-        res.render('./users/pages/profile',{user,wallet})
+        res.render('./users/pages/profile', { user, wallet })
     } catch (error) {
         console.log(error.message);
     }
 }
 
-//search
-const search =asyncHandler( async (req, res) => {
-    console.log(req.body.search);
-    try {
-        const data = req.body.search;
-        const user = req.user;
-        const page = req.query.p || 1;
-        const limit = 3;
-        const listedCategories = await Category.find({ isListed: true });
-        // Get the IDs of the listed categories
-        const listedCategoryIds = listedCategories.map(category => category._id);
-        
-        const searching = await Product.find({ title: { $regex: data, $options: 'i' } }).populate('images')
-        .skip((page - 1) * limit)
-        .limit(limit);
-        console.log(user);
-        const count = await Product.find(
-            { categoryName: { $in: listedCategoryIds }, isListed: true })
-            .countDocuments();
-            let cartProductIds;
-            if (user) {
-                if (user.cart) {
-                    cartProductIds = user.cart.map(cartItem => cartItem.product.toString());
-                }
-    
-            } else {
-                cartProductIds = null;
-    
-            }
-            
-        if (searching.length>0) {
-            res.render('./users/pages/shopping1', { user, cartProductIds, catList: searching ,products:searching, category: listedCategories,currentPage: page,
-            totalPages: Math.ceil(count / limit)
-           })
-
-        } else {
-            res.render('./users/pages/shopping1', { user, cartProductIds, catList: searching ,products:searching, category: listedCategories,currentPage: page,
-                totalPages: Math.ceil(count / limit)
-               })
-        }
-
-    } catch (error) {
-        console.log(error.message);
-    }
-})
-
-
-
-
-
 // Shopping Page--
-// Shopping Page--
-// Shopping Page--
-    
-// const shopping = asyncHandler(async (req, res) => {
-
-//     console.log('request from unauth user ');
-//     try {
-//         console.log(req.query.minPrice)
-      
-        
-//         const user = req.user;
-//         const page = req.query.p || 1;
-//         const limit = 3;
-//         let filteredProducts
-//         if (req.query.minPrice && req.query.maxPrice) {
-//             const minPrice = parseInt(req.query.minPrice, 10);
-//             console.log(minPrice)
-//             const maxPrice = parseInt(req.query.maxPrice, 10);
-//             console.log(maxPrice)
-//             let filteredProducts = await Product.find({salePrice: { $gte: minPrice, $lte: maxPrice }, });
-//             console.log(filteredProducts)
-//         }
-        
-//         const listedCategories = await Category.find({ isListed: true });
-//         // Get the IDs of the listed categories
-//         const listedCategoryIds = listedCategories.map(category => category._id);
-
-//         // Find products that belong to the listed categories
-//         const findProducts = await Product.find(
-//             { categoryName: { $in: listedCategoryIds }, isListed: true }).populate('images')
-//             .skip((page - 1) * limit)
-//             .limit(limit)
-
-//         let cartProductIds;
-//         let userWishlist;
-//         if (user ) {
-//             if (user.cart || user.userWishlist) {
-//                 cartProductIds = user.cart.map(cartItem => cartItem.product.toString());
-//                 userWishlist = user.wishlist;
-//             }
-
-//         } else {
-//             cartProductIds = null;
-//             userWishlist = false;
-
-//         }
-
-//         const count = await Product.find(
-//             { categoryName: { $in: listedCategoryIds }, isListed: true })
-//             .countDocuments();
-           
-
-//         res.render('./users/pages/shopping1', {
-//             products: findProducts,
-//             category: listedCategories,
-//             cartProductIds,
-//             user,
-//             userWishlist,
-//             currentPage: page,
-//             totalPages: Math.ceil(count / limit), // Calculating total pages
-//             filteredProducts
-//         });
-//     } catch (error) {
-//         throw new Error(error);
-//     }
-// });
-
 const shopping = asyncHandler(async (req, res) => {
+    console.log('request from unauth user ');
     try {
         const user = req.user;
         const page = req.query.p || 1;
         const limit = 3;
-        let filteredProducts = [];
-        console.log(req.query.minPrice)
-        console.log(req.query.maxPrice)
-
-        if (req.query.minPrice && req.query.maxPrice) {
-            const minPrice = parseInt(req.query.minPrice, 10);
-            const maxPrice = parseInt(req.query.maxPrice, 10);
-            filteredProducts = await Product.find({ salePrice: { $gte: minPrice, $lte: maxPrice } }).populate("images")
-        }
-        console.log(filteredProducts);
 
         const listedCategories = await Category.find({ isListed: true });
-        const listedCategoryIds = listedCategories.map(category => category._id);
+        const categoryMapping = {};
 
-        const findProducts = await Product.find(
-            { categoryName: { $in: listedCategoryIds }, isListed: true }).populate('images')
+        listedCategories.forEach(category => {
+            categoryMapping[category.categoryName] = category._id;
+        });
+        const filter = { isListed: true };
+        let cat = '651e18c16bbeb6d5b109ce73'
+        if (req.query.category) {
+            // Check if the category name exists in the mapping
+            if (categoryMapping.hasOwnProperty(req.query.category)) {
+                filter.categoryName = categoryMapping[req.query.category];
+            } else {
+                filter.categoryName = cat
+            }
+        }
+
+        // Check if a search query is provided
+        if (req.query.search) {
+            filter.$or = [
+                { title: { $regex: req.query.search, $options: 'i' } },
+                
+            ];
+            // if search and category both included in the query parameters 
+            if (req.query.search && req.query.category) {
+                if (categoryMapping.hasOwnProperty(req.query.category)) {
+                    filter.categoryName = categoryMapping[req.query.category];
+                } else {
+                    filter.categoryName = cat
+                }
+            }
+        }
+
+        let sortCriteria = {};
+
+        // Check for price sorting
+        if (req.query.sort === 'lowtoHigh') {
+            sortCriteria.salePrice = 1;
+        } else if (req.query.sort === 'highToLow') {
+            sortCriteria.salePrice = -1;
+        }
+        //filter by both category and price
+        if (req.query.category && req.query.sort) {
+            if (categoryMapping.hasOwnProperty(req.query.category)) {
+                filter.categoryName = categoryMapping[req.query.category];
+            } else {
+                filter.categoryName = cat
+            }
+
+            if (req.query.sort) {
+                sortCriteria.salePrice = 1;
+            }
+            if (req.query.sort === 'highToLow') {
+                sortCriteria.salePrice = -1;
+            }
+        }
+
+
+        const findProducts = await Product.find(filter).populate('images')
             .skip((page - 1) * limit)
-            .limit(limit);
+            .limit(limit)
+            .sort(sortCriteria);
 
-        let cartProductIds;
         let userWishlist;
-
+        let cartProductIds;
         if (user) {
-            if (user.cart || user.userWishlist) {
+            if (user.cart || user.wishlist) {
                 cartProductIds = user.cart.map(cartItem => cartItem.product.toString());
                 userWishlist = user.wishlist;
             }
+
         } else {
             cartProductIds = null;
             userWishlist = false;
         }
 
-        const count = await Product.find(
-            { categoryName: { $in: listedCategoryIds }, isListed: true })
+        const count = await Product.find(filter)
+            // { categoryName: { $in: listedCategoryIds }, isListed: true })
             .countDocuments();
-
-        if (req.query.minPrice && req.query.maxPrice) {
-            
-            // If the request contains price filters, send a JSON response
-            return res.json({
-                products: filteredProducts,
-                category: listedCategories,
-                cartProductIds,
-                user,
-                userWishlist,
-                currentPage: page,
-                totalPages: Math.ceil(count / limit),
-                filteredProducts,
-            });
-        } else {
-            // Otherwise, render your HTML template
-            return res.render('./users/pages/shopping1', {
-                products: findProducts,
-                category: listedCategories,
-                cartProductIds,
-                user,
-                userWishlist,
-                currentPage: page,
-                totalPages: Math.ceil(count / limit),
-               
-            });
+        let selectedCategory = [];
+        if (filter.categoryName) {
+            selectedCategory.push(filter.categoryName)
         }
+        console.log('selected cat', selectedCategory);
+
+
+        res.render('./users/pages/shopping1', {
+            products: findProducts,
+            category: listedCategories,
+            cartProductIds,
+            user,
+            userWishlist,
+            currentPage: page,
+            totalPages: Math.ceil(count / limit), // Calculating total pages
+            selectedCategory
+        });
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: "Internal Server Error" });
+        throw new Error(error);
     }
 });
+
 
 
 
@@ -436,7 +324,7 @@ const viewProduct = asyncHandler(async (req, res) => {
         const user = req.user
         console.log(user)
         const findProduct = await Product.findOne({ _id: id }).populate('categoryName').populate('images')
-   
+
         const reviews = await Review.find({ product: id }).populate("user");
 
 
@@ -464,13 +352,13 @@ const viewProduct = asyncHandler(async (req, res) => {
                 cartProductIds = user.cart.map(cartItem => cartItem.product.toString());
                 userWishlist = user.wishlist;
             }
-        
+
         } else {
             cartProductIds = null;
             userWishlist = false;
 
         }
-        res.render('./users/pages/singleproduct', { product: findProduct, products: products, cartProductIds, userWishlist,reviews,avgRating})
+        res.render('./users/pages/singleproduct', { product: findProduct, products: products, cartProductIds, userWishlist, reviews, avgRating })
     } catch (error) {
         throw new Error(error)
     }
@@ -498,168 +386,7 @@ const aboutUs = asyncHandler(async (req, res) => {
 })
 
 
-// const categoryPage = async (req,res) =>{
 
-//     try{
-//         const  categoryId = req.query.id
-//         const category = await Category.find({ })
-//         // const page = parseInt(req.query.page) || 1; 
-//         const limit = 6;
-//         // const skip = (page - 1) * limit;
-//         const totalProducts = await Product.countDocuments({ category:categoryId,  isListed: true }); // Get the total number of products
-//         const totalPages = Math.ceil(totalProducts / limit);
-
-//         const categories = await Category.find({ })
-         
-//         const products = await Product.find({ category:categoryId,  isListed: true })
-//         // .skip(skip)
-//         // .limit(limit)
-//         .populate('category')
-//         // console.log("products",products);
-//         // console.log("categories",categories);
-//         res.render('./users/pages/categoryShop',{products,category })
-//     }
-//     catch(err){
-//         console.log('category page error',err);
-//     }
-// }
-
-
-
-
-// const categoryPage = async (req, res) => {
-//     try {
-//         let user = req.session.user
-//         const id = req.query.id
-//         const prdtdetails = await Product.find({ _id: id }).populate('Product').exec()
-//         const category = prdtdetails.Category
-//         res.render('./users/pages/categoryShop', { products :prdtdetails,category: category, user })
-//     } catch (error) {
-//         res.status(500).json({ error: 'products details not found!!!' });
-//     }
-// }
-
-
-// const categoryPage = async (req, res) => {
-//     try {
-//         let user = req.session.user;
-//         console.log(user)
-//         const id = req.query.id;
-//         console.log(id)
-//         // Find the product by _id and populate the categoryName field
-//         // const prdtdetails = await Product.findOne({ _id: id });
-//         const categoryId=req.query.id;
-//         const prdtdetails = await Product.find({ categoryName: categoryId })
-//         .exec((err, products) => {
-//           if (err) {
-//             // Handle the error
-//             return res.status(500).json({ error: 'An error occurred while fetching products' });
-//           }
-      
-//           // Handle the products
-//           res.json(products);
-//         });
-//         console.log(prdtdetails)
-
-//         // The 'categoryName' field should now be populated with the actual category document
-//         // const category = prdtdetails.categoryName;
-
-//         res.render('./users/pages/categoryShop', { products: prdtdetails, user });
-//     } catch (error) {
-//         res.status(500).json({ error: 'products details not found!!!' });
-//     }
-// };
-
-
-
-// const categoryPage = async (req, res) => {
-//     try { 
-//         let user = req.session.user;
-//         const category = await Category.find({ })
-//         const categoryId = req.query.id;
-
-//         // Find all products with the specified category
-//         const prdtdetails = await Product.find({ categoryName: categoryId }).exec();
-
-//         // The 'categoryName' field should now be populated with the actual category document
-
-//         res.render('./users/pages/categoryShop', { products: prdtdetails,category, user });
-//     } catch (error) {
-//         console.error(error);
-//         res.status(500).json({ error: 'An error occurred while fetching products' });
-//     }
-// };
-
-
-const categoryPage = async (req, res) => {
-    try { 
-        let user = req.user;
-        const category = await Category.find({});
-        const categoryId = req.query.id;//get the category from the body
-        const page = req.query.p || 1; // Get the current page from the query parameters
-        const limit = 3;
-        let Wishlist;
-        
-        if (user ) {
-            // console.log(user.Wishlist)
-            if ( user.wishlist) {
-                Wishlist = user.wishlist;
-            }
-
-        } else {
-            Wishlist = false;
-
-        }
-        async function getCategoryNameById(categoryId) {
-            try {
-                const category = await Category.findById(categoryId);
-                if (category) {
-                    // console.log(category.categoryName)
-                    return category.categoryName;
-                }
-                return null; // Return null if the category is not found
-            } catch (error) {
-                console.error('Error while fetching category:', error);
-                return null;
-            }
-        }
-      
-      
-        const categoryName = await getCategoryNameById(categoryId);
-       
-        const listedCategories = await Category.find({ isListed: true });
-        // Get the IDs of the listed categories
-        const listedCategoryIds = listedCategories.map(category => category._id);
-
-        // Find all products with the specified category
-        const prdtdetails = await Product.find({ categoryName: categoryId ,isListed: true}).populate('images')
-            .skip((page - 1) * limit)
-            .limit(limit)
-            .exec();
-
-        // The 'categoryName' field should now be populated with the actual category document
-        const count = await Product.find({ categoryName: categoryId,isListed: true }).countDocuments();
-// console.log(categoryName)
-        // Calculate the total number of pages
-        const totalPages = Math.ceil(count / limit);
-
-        console.log(categoryName)
-
-        res.render('./users/pages/categoryShop', {
-            products: prdtdetails,
-            category: listedCategories,
-            user,
-            categoryname:categoryName,
-            currentPage: page,
-            category_id: categoryId,
-            totalPages: totalPages,
-            Wishlist  // Pass currentPage and totalPages for pagination
-        });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'An error occurred while fetching products' });
-    }
-};
 
 
 // wishlist--
@@ -770,8 +497,8 @@ module.exports = {
     wishlist,
     contact,
     aboutUs,
-    categoryPage,
-    search,
+    // categoryPage,
+    //  search,
     removeItemfromWishlist,
     addTowishlist,
     addReview,

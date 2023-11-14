@@ -58,7 +58,7 @@ const editAddressPage = asyncHandler(async (req, res) => {
 const updateAddress = asyncHandler(async (req, res) => {
     try {
         const id = req.params.id
-        console.log('logiign body', req.body);
+        console.log('login body', req.body);
         const addData = await Address.findOneAndUpdate({ _id: id }, req.body);
         console.log('data is', addData);
 

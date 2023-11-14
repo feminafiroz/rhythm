@@ -110,7 +110,7 @@ minusButtons.forEach((button) => {
 
 
 function addToCart(id) {
-    console.log("in the add to cart ")
+   
     const productId = id;
     const url = `/cart/add/${productId}`;
     const cartCount = document.getElementById("cartCount");

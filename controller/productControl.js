@@ -88,10 +88,8 @@ const listProduct = asyncHandler(async (req, res) => {
     try {
 
         const id = req.params.id
-        console.log(id);
 
         const listing = await Product.findByIdAndUpdate({ _id: id }, { $set: { isListed: true } })
-        console.log(listing);
         res.redirect('/admin/products')
 
     } catch (error) {
@@ -150,7 +148,6 @@ const editImage = asyncHandler(async (req, res) => {
     try {
         const imageId = req.params.id;
         const file = req.file;
-        console.log('file', req.file);
         const imageBuffer = await sharp(file.path).resize(600, 800).toBuffer();
         const thumbnailBuffer = await sharp(file.path).resize(300, 300).toBuffer();
         const imageUrl = path.join("/admin/uploads", file.filename);

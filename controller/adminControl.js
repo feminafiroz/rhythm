@@ -54,7 +54,6 @@ const verifyAdmin = expressHandler(async(req,res)=>{
 // loadDashboard---  
 const loadDashboard = expressHandler(async (req, res) => {
     try {
-        console.log("sdfxhcg,bhj.kl/.j,hgfnbxdvzfxcgn,hjk./lj.h,gfnbxcgnvbhmj,nkm")
         const messages = req.flash();
         const user = req?.user;
         const recentOrders = await Order.find()
@@ -143,18 +142,6 @@ const searchUser = expressHandler(async(req,res)=>{
 
 
 
-// Block a User
-// const blockUser = expressHandler(async (req, res) => {
-//     try {
-//         const id = req.params.id;
-//      const finduser =    await User.findByIdAndUpdate(id, { isBlock: true }, { new: true });
-//          console.log(finduser);
-//         res.redirect('/admin/user');
-//     } catch (error) {
-//         throw new Error(error)    
-//     }
-// });
-
 const blockUser = expressHandler(async (req, res) => {
     try {
         const id = req.params.id;
@@ -173,17 +160,6 @@ const blockUser = expressHandler(async (req, res) => {
     }
 });
 
-
-// Unblock a User
-// const unBlockUser = expressHandler(async (req, res) => {
-//     try { 
-//         const id = req.params.id;
-//          await User.findByIdAndUpdate(id, { isBlock: false }, { new: true });
-//         res.redirect('/admin/user');
-//     } catch (error) {
-//         throw new Error(error);
-//     }
-// });
 
 const unBlockUser = expressHandler(async (req, res) => {
     try {
@@ -280,10 +256,7 @@ const editOrder = expressHandler(async (req, res) => {
 const updateOrderStatuss = expressHandler(async (req, res) => {
     try {
         const orderId = req.params.id;
-
-console.log(orderId)
 console.log(req.body.status)
-console.log(status)
 const newStatus = req.body.status
         // const order = await updateOrderStatus(orderId, req.body.status);\
         const order = await OrderItem.findByIdAndUpdate(orderId, { status: newStatus })
@@ -292,7 +265,7 @@ const newStatus = req.body.status
         } else if (req.body.status === status.delivered) {
             order.deliveredDate = Date.now();
         }
-        console.log("2")
+      
         await order.save();
 
         if (req.body.status === status.cancelled) {

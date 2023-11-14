@@ -193,7 +193,6 @@ const orderPlaced = asyncHandler(async (req, res) => {
         const coupon = (await Coupon.findOne({ code: couponCode, expiryDate: { $gt: Date.now() } })) || null;
         // const coupon = (await Coupon.findOne({ code: req.session.coupon.code })) || null;
         const userId = req.user._id;
-        console.log(userId)
         // Populate the order details, including product details
         const order = await Order.findById(orderId).populate({
             path: "orderItems",
@@ -271,11 +270,7 @@ const verifyPayment = asyncHandler(async (req, res) => {
             razorpay_signature,
             orderId
            
-        );
-        // for(let i=0;i<100;i++){
-        //     console.log(razorpay_payment_id, razorpay_order_id, razorpay_signature, orderId, walletAmount, userId)
-        // }
-        
+        );     
 
         if (result) {
             const wallet = await Wallet.findOneAndUpdate(

@@ -34,7 +34,7 @@ async function isValidCoupon(couponCode, user, total) {
         }
 
         if (total < findCoupon.minimumPurchase || total > findCoupon.maximumPurchase) {
-             console.log('ksdkflj max check',);
+            
             const minimumPurchase = findCoupon.minimumPurchase;
             const maximumPurchase = findCoupon.maximumPurchase;
             return { coupon: null, message: `Order total must be greater than ${minimumPurchase} , less than ${maximumPurchase} to get this coupon ` };

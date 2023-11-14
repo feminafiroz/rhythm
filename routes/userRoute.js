@@ -39,14 +39,14 @@ userRoute.get('/logout', ensureAuthenticated, userController.userLogout);
 userRoute.get('/contact', userController.contact);
 userRoute.get('/about', userController.aboutUs);
 userRoute.get('/profile', ensureAuthenticated, userController.userProfile);
-userRoute.post('/shop/search', userController.search);
+// userRoute.post('/shop/search', userController.search);
 
 
 
 // shopping_section--- 
 userRoute.get('/shop', userController.shopping);   /* shopping page */
 userRoute.get('/viewProduct/:id',validateID, userController.viewProduct); /* view single product */
-userRoute.get('/categoryShop',userController.categoryPage);
+// userRoute.get('/categoryShop',userController.categoryPage);
 userRoute.get('/wishlist', ensureAuthenticated, userController.wishlist);
 userRoute.get('/addTo-wishlist/:id', validateID, ensureAuthenticated, userController.addTowishlist);
 userRoute.get('/removeWishlist/:id', validateID, ensureAuthenticated, userController.removeItemfromWishlist);

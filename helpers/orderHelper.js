@@ -256,7 +256,7 @@ module.exports = {
                     });
                 } else {
                     const existingWallet = await Wallet.findOneAndUpdate({ user: userId });
-                    console.log('user id ===========================================',userId);
+        
 
                 existingWallet.balance += orderTotal;
                    

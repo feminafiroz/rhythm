@@ -11,6 +11,24 @@
     </div>
 </div>
 
+<!-- <div class="breadcrumb-area" style="background-color: black; color: white;">
+    <div class="container">
+        <div class="breadcrumb-content text-center pt-1">
+            <ul>
+                <li>
+                    <h3><a href="/">Home</a></h3>
+                </li>
+                <li>
+                    <h3 style="color: white;">/</h3>
+                </li>
+                <li>
+                    <h3 style="color: white;">Shop</h3>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div> -->
+
 <div class="shop-page-wrapper shop-page-padding ptb-100">
     <div class="container-fluid">
         <div class="row gy-5">
@@ -20,107 +38,60 @@
                     <div class="sidebar-widget mb-50">
                         <h3 class="sidebar-title">Search Products</h3>
                         <div class="sidebar-search">
-                            <form action="/shop/search" method="post">
+                            <form>
                                 <input placeholder="Search Products..." type="text" id="search" name="search">
                                 <button><i class="ti-search"></i></button>
                             </form>
+                        </div>        
+                    </div>
+
+                    <div class="sidebar-widget mb-20">
+                        <h3 class="sidebar-title">Filter by Price</h3>
+                        <div class="sidebar-categories">
+                            <ul>
+                                <li><a href="/shop">
+                                        Default
+                                    </a></li>
+                                <li><a href="" id="lowToHigh">
+                                        Low to High
+                                    </a></li>
+                                <li><a href="" id="highToLow">
+                                        High to low
+                                    </a></li>
+                            </ul>
                         </div>
                     </div>
 
-                    <!-- <div class="sidebar-widget mb-40">
-                        <h3 class="sidebar-title">Filter by Price</h3>
-                        <div class="price_filter">
-                            <div id="slider-range"></div>
-                            <div class="price_slider_amount">
-                                <div class="label-input">
-                                    <label>price : </label>
-                                    <input type="text" id="amount" name="price" placeholder="Add Your Price" />
-                                </div>
-                                <button type="button">Filter</button>
-                            </div>
-                        </div>
-                    </div> -->
 
-                    <!-- <div class="sidebar-widget mb-40">
-                        <h3 class="sidebar-title">Filter by Price</h3>
-                        <div class="price_filter">
-                            <div id="slider-range"></div>
-                            <div class="price_slider_amount">
-                                <div class="label-input">
-                                    <label>price : </label>
-                                    <input type="text" id="amount" name="price" placeholder="₹3k - ₹1L" />
-                                </div>
-                                <button type="button" id="filter-button">Filter</button>
-                            </div>
-                        </div>
-                    </div>
-                     -->
+                    <div class="sidebar-widget mb-45">
+                        <h3 class="sidebar-title">Categories</h3>
+                        <div class="sidebar-categories">
+                            <ul>
+                                <% if (category.length>0) { %>
+                                    <% category.forEach(element=> { %>
+                                        <li><a href="/shop?p=<%= currentPage %>&category=<%= element.categoryName %>" <%
+                                                if (selectedCategory && selectedCategory.length>0) { %>
+                                                class="<%= selectedCategory.includes(element._id) ? 'text-dark' : '' %>"
+                                                    <% } %>>
+                                                        <%= element.categoryName %>
+                                            </a></li>
+                                        <% }); %>
 
-                    <div class="sidebar-widget mb-40">
-                        <h3 class="sidebar-title">Filter by Price</h3>
-                        <div class="price_filter">
-                            <div id="slider-range"></div>
-                            <div class="price_slider_amount">
-                                <div class="label-input">
-                                    <label>Price Range:</label><br>
-                                    <input type="text" id="min-price" name="minPrice" placeholder="Min" />
-                                    <span>-</span>
-                                    <input type="text" id="max-price" name="maxPrice" placeholder="Max" />
-                                </div>
-                                <button type="button" id="filter-button">Filter</button>
-                            </div>
+                                            <% } else { %>
+                                                <h3>NO CATEGORIES</h3>
+                                                <% } %>
+                            </ul>
                         </div>
                     </div>
 
-                    <% if (products.length> 0) { %>
-
-                        <div class="sidebar-widget mb-45">
-                            <h3 class="sidebar-title">Categories</h3>
-                            <div class="sidebar-categories">
-                                <ul>
-                                    <% if (category.length>0) { %>
-
-
-                                        <% category.forEach(element=> { %>
-
-                                            <li><a href="/categoryShop?id=<%= element._id %>">
-                                                    <%= element.categoryName %>
-                                                </a></li>
-
-                                            <% }); %>
-
-                                                <% } else { %>
-                                                    <h3>NOOOOO</h3>
-                                                    <% } %>
-
-                                </ul>
-
-                            </div>
-                        </div>
-                        <% } %>
                 </div>
             </div>
 
             <div class="col-lg-9 order-1 order-lg-2">
                 <div class="shop-product-wrapper res-xl">
                     <div class="shop-bar-area">
-                        <!-- <div class="shop-bar pb-60">
-                            <div class="shop-found-selector">
-                                <div class="shop-found">
-                                    <p><span>23</span> Product Found of <span>50</span></p>
-                                </div>
-                                <div class="shop-selector">
-                                    <label>Sort By : </label>
-                                    <select name="select">
-                                        <option value="">Default</option>
-                                        <option value="">A to Z</option>
-                                        <option value=""> Z to A</option>
-                                        <option value="">In stock</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div> -->
-
+                        <div class="shop-bar pb-60">
+                        </div>
                         <div class="shop-product-content tab-content">
                             <div id="grid-sidebar3" class="tab-pane fade active show">
                                 <div class="row">
@@ -151,109 +122,102 @@
 
                                 </div>
                             </div>
-                            <div id="product-list-container">
-                                <div id="grid-sidebar3" class="tab-pane fade active show">
-                                    <div class="row">
+                            <div id="grid-sidebar3" class="tab-pane fade active show">
+                                <div class="row">
+                                    <% if (products.length>0) { %>
 
-                                        <% if (products.length>0) { %>
+                                        <% products.forEach(element=> { %>
 
-                                            <% products.forEach(element=> { %>
+                                            <div class="col-md-6 col-xl-4">
+                                                <div class="product-wrapper mb-30">
+                                                    <% if (Array.isArray(element.images) && element.images.length> 0) {
+                                                        %>
+                                                        <div class="product-img">
+                                                            <a href="/viewProduct/<%= element?._id %>">
+                                                                <img src="<%= element.images[0].imageUrl %>"
+                                                                    alt="ProductUrl">
+                                                            </a>
+                                                            <% } else { %>
+                                                                <span>No image available</span>
+                                                                <% } %>
+                                                                    <div class="product-action">
+                                                                        <% if (userWishlist) { %>
+                                                                            <a class="animate-right" id="wishlist"
+                                                                                title="Wishlist"
+                                                                                onclick="toggleWishlist(`<%= element._id %>`)">
 
-                                                <div class="col-md-6 col-xl-4">
-                                                    <div class="product-wrapper mb-30">
-                                                        <% if (Array.isArray(element.images) && element.images.length>
-                                                            0) {
-                                                            %>
-                                                            <div class="product-img">
-                                                                <a href="/viewProduct/<%= element?._id %>">
-                                                                    <img src="<%= element.images[0].imageUrl %>"
-                                                                        alt="ProductUrl">
-                                                                </a>
-                                                                <% } else { %>
-                                                                    <span>No image available</span>
-                                                                    <% } %>
-                                                                        <div class="product-action">
-                                                                            <% if (!user) { %>
+                                                                                <% if
+                                                                                    (userWishlist.includes(element._id))
+                                                                                    { %>
+                                                                                    <i class="pe-7s-like"
+                                                                                        style="color: red;"></i>
+                                                                                    <% } else { %>
+                                                                                        <i class="pe-7s-like"></i>
+                                                                                        <% } %>
+                                                                            </a>
+                                                                            <% } else { %>
+                                                                                <a class="btn-hover list-btn-wishlist"
+                                                                                    href="/login"> <i
+                                                                                        class="pe-7s-like"></i></a>
+                                                                        <% } %>
 
-                                                                                <a class="animate-left" title="Wishlist"
-                                                                                    href="/login">
-                                                                                    <i class="pe-7s-like"></i>
-                                                                                </a>
 
-                                                                                <% }else { %>
 
-                                                                                    <% if (userWishlist) { %>
-                                                                                        <a class=" animate-left"
-                                                                                            id="wishlist" href=""
-                                                                                            onclick="addTowishlist(`<%= element._id %>`)">
-
-                                                                                            <% if
-                                                                                                (userWishlist.includes(element._id))
-                                                                                                { %>
-                                                                                                <i class="pe-7s-like"
-                                                                                                    style="color: red;"></i>
-                                                                                                <% } else { %>
-                                                                                                    <i
-                                                                                                        class="pe-7s-like"></i>
-                                                                                                    <% } %>
+                                                                                    <% if (!user) { %>
+                                                                                        <a class="animate-top"
+                                                                                            title="Add To Cart"
+                                                                                            href="/login">
+                                                                                            <i class="pe-7s-cart"></i>
                                                                                         </a>
-                                                                                        <% } else { %>
-                                                                                            <a class=" animate-left"
-                                                                                                href="/login"> <i
-                                                                                                    class="pe-7s-like"></i></a>
-                                                                                            <% } %>
-
-                                                                                                <%}%>
-
-                                                                                                    <% if (!user) { %>
-                                                                                                        <a class="animate-top"
-                                                                                                            title="Add To Cart"
-                                                                                                            href="/login">
-                                                                                                            <i
-                                                                                                                class="pe-7s-cart"></i>
-                                                                                                        </a>
-                                                                                                        <% } %>
+                                                                                        <% } %>
+                                                                                            <a class="animate-right"
+                                                                                                title="Quick View"
+                                                                                                href="/viewProduct/<%= element?._id %>">
+                                                                                                <i
+                                                                                                    class="pe-7s-look"></i>
+                                                                                            </a>
+                                                                    </div>
+                                                        </div>
+                                                        <div class="product-content">
+                                                            <h4><a href="/viewProduct/<%= element?._id %>">
+                                                                    <%= element.title %>
+                                                                </a></h4>
 
 
-                                                                                                            <a class="animate-right"
-                                                                                                                title="Quick View"
-                                                                                                                href="/viewProduct/<%= element?._id %>">
-                                                                                                                <i
-                                                                                                                    class="pe-7s-look"></i>
-                                                                                                            </a>
+                                                            <!-- <span class="text-decoration-line-through">
+                                                                <% if (element.productPrice !==element.salePrice) { %>
+                                                                    ₹<%= element.productPrice %>
+                                                                        <% } %>
+                                                            </span> -->
 
 
+                                                            <span class="text-decoration-line-through">
+                                                                ₹<%= (element.productPrice).toLocaleString() %>
+                                                            </span>
+                                                            <br>
 
-                                                                                                            <div id="fixed-div"
-                                                                                                                class="mt-2 fixed-div border rounded-pill p-2"
-                                                                                                                style="display: none;">
-                                                                                                                <p id="wishlist-message"
-                                                                                                                    class=" mb-0 text-light text-center">
-                                                                                                                </p>
-                                                                                                            </div>
+                                                            <span>₹<%= (element.salePrice).toLocaleString() %></span>
+                                                            <ul class="list-unstyled">
+                                                                <!-- <li class="d-inline-block"><label>Category:</label></li> -->
+                                                                <!-- <li class="d-inline-block"> -->
+                                                                <!-- <%= element.categoryName.categoryName%> -->
+                                                                <!-- </li> -->
 
+                                                            </ul>
+                                                        </div>
 
-                                                                        </div>
-                                                            </div>
-                                                            <div class="product-content">
-                                                                <h4><a href="/viewProduct/<%= element?._id %>">
-                                                                        <%= element.title %>
-                                                                    </a></h4>
-                                                                <span class="text-decoration-line-through">
-                                                                    ₹<%= (element.productPrice).toLocaleString() %>
-                                                                        </span>
-                                                                <br>
-                                                                <span>₹<%= (element.salePrice).toLocaleString() %>
-                                                                        </span>
-                                                            </div>
-                                                    </div>
                                                 </div>
-                                                <% }) %>
+                                            </div>
+                                            <% }) %>
 
-                                                    <% } else { %>
-                                                        <h2>No Products found</h2>
-                                                        <% } %>
-                                    </div>
+                                                <% } else { %>
+                                                    <h2>No Products found</h2>
+                                                    <% } %>
+
+
+
+
+
                                 </div>
                             </div>
 
@@ -306,205 +270,5 @@
     }
 </style>
 
-
-<!-- <script>
-
-var sliderrange = $('#slider-range');
-    var amountprice = $('#amount');
-    $(function () {
-        // Initialize the price range slider
-        sliderrange.slider({
-            range: true,
-            min: 3000,   // Set the minimum price to 3000
-            max: 100000, // Set the maximum price to 100000
-            values: [3000, 100000], // Set initial min and max values
-            step: 100, // Set step value
-            slide: function (event, ui) {
-                amountprice.val("₹" + ui.values[0] + " - ₹" + ui.values[1]);
-            },
-        });
-    
-        // Get the initial price values
-        const initialMinPrice = $("#slider-range").slider("values", 0);
-        const initialMaxPrice = $("#slider-range").slider("values", 1);
-    console.log("1")
-        // Add an event listener for the "Filter" button
-        $("#filter-button").on("click", function () {
-            console.log("inside the price filtering frontend");
-            const minPrice = $("#slider-range").slider("values", 0);
-            const maxPrice = $("#slider-range").slider("values", 1);
-    console.log("2")
-            // Now you can use the 'minPrice' and 'maxPrice' for filtering your product data
-            // Send these values to your server for product filtering
-            console.log("Min Price: ₹" + minPrice);
-            console.log("Max Price: ₹" + maxPrice);
-            console.log("3")
-    
-            fetch(`/shop?minPrice=${minPrice}&maxPrice=${maxPrice}`)
-                .then((response) => response.json())
-                .then((filteredProducts) => {
-                    // Update the product list on the front end with the filtered data
-                    updateProductList(filteredProducts);
-                });
-
-    console.log("4444444444444444444444444")
-
-        });
-    
-        // Initialize the input field with the initial values
-        $("#amount").val("₹" + initialMinPrice + " - ₹" + initialMaxPrice);
-    });
-
-</script> -->
-
-<!-- 
-<script>
-    var sliderrange = $('#slider-range');
-    var minPriceInput = $('#min-price'); // Input field for minimum price
-    var maxPriceInput = $('#max-price'); // Input field for maximum price
-
-    $(function () {
-        // Initialize the price range slider
-        sliderrange.slider({
-            range: true,
-            min: 3000,   // Set the minimum price to 3000
-            max: 100000, // Set the maximum price to 100000
-            values: [3000, 100000], // Set initial min and max values
-            step: 100, // Set step value
-            slide: function (event, ui) {
-                minPriceInput.val(ui.values[0]);
-                maxPriceInput.val(ui.values[1]);
-            },
-        });
-
-        // Get the initial price values
-        const initialMinPrice = sliderrange.slider("values", 0);
-        const initialMaxPrice = sliderrange.slider("values", 1);
-
-        // Add an event listener for the "Filter" button
-        $("#filter-button").on("click", function () {
-            console.log("inside the price filtering frontend");
-            const minPrice = minPriceInput.val();
-            const maxPrice = maxPriceInput.val();
-
-            console.log("Min Price: ₹" + minPrice);
-            console.log("Max Price: ₹" + maxPrice);
-
-            // Now you can use the 'minPrice' and 'maxPrice' for filtering your product data
-            // Send these values to your server for product filtering
-            console.log("3");
-
-            fetch(`/shop?minPrice=${minPrice}&maxPrice=${maxPrice}`)
-                .then((response) => response.json())
-                .then((filteredProducts) => {
-                    // Update the product list on the front end with the filtered data
-                    updateProductList(filteredProducts);
-                });
-
-            console.log("4");
-        });
-
-        // Initialize the input fields with the initial values
-        minPriceInput.val(initialMinPrice);
-        maxPriceInput.val(initialMaxPrice);
-    });
-</script> -->
-
-<script>
-    // Function to update the product list with filtered data
-    function updateProductList(filteredProducts) {
-        console.log(filteredProducts)
-        console.log(filteredProducts)
-
-        const productListContainer = document.getElementById("product-list-container");
-
-        if (!productListContainer) {
-            console.log("Product list container not found");
-            return;
-        }
-        if (Array.isArray(filteredProducts.products)) {
-    console.log("It's an array.");
-} else {
-    console.log("It's not an array.");
-}
-
-        if (filteredProducts) {
-          
-            // Clear the existing product list
-            productListContainer.innerHTML = "";
-        }
-
-       
-        if ( filteredProducts.products.length > 0) {
-            console.log("retetyrt")
-
-            
-            // Loop through the filtered products and generate the product HTML
-            filteredProducts.products.forEach((product) => {
-                const productHTML = ` 
-                <div id="product-list-container">
-                <div id="grid-sidebar3" class="tab-pane fade active show">
-                <div class="row">
-                    
-                 <div class="col-md-6 col-xl-4">
-                <div class="product-wrapper mb-30">
-                  <!-- Your product HTML here -->
-                        <div class="product-img">
-                        <a href="/viewProduct/${ product?._id }">
-                            <img src="${ product.images[0].imageUrl }" alt="ProductUrl">
-                        </a>
-                        </div>
-                         <h4>${product.title}</h4>
-                         <span class="text-decoration-line-through">₹${product.productPrice.toLocaleString()}</span>
-                         <br>
-                         <span>₹${product.salePrice.toLocaleString()}</span>
-         
-                </div>
-                </div>`
-                productListContainer.innerHTML += productHTML;
-                ` </div>
-               </div>
-               </div>
-        `;
-
-                // Append the product HTML to the container
-               
-            });
-        } else {
-            // If no products match the filter, display a message
-            productListContainer.innerHTML = "<h2>No Products found</h2>";
-        }
-    }
-
-    $(document).ready(function () {
-        // Input fields for minimum and maximum price
-        var minPriceInput = $('#min-price');
-        var maxPriceInput = $('#max-price');
-
-        // Add an event listener for the "Filter" button
-        $("#filter-button").on("click", function () {
-            console.log("inside the price filtering frontend");
-            const minPrice = minPriceInput.val();
-            const maxPrice = maxPriceInput.val();
-
-            console.log("Min Price: ₹" + minPrice);
-            console.log("Max Price: ₹" + maxPrice);
-
-            // Now you can use the 'minPrice' and 'maxPrice' for filtering your product data
-            // Send these values to your server for product filtering
-            console.log("3");
-
-            fetch(`/shop?minPrice=${minPrice}&maxPrice=${maxPrice}`)
-                .then((response) => response.json())
-                .then((filteredProducts) => {
-                    // Update the product list on the front end with the filtered data
-                    updateProductList(filteredProducts);
-                });
-
-            console.log("4");
-        });
-    });
-</script>
-
-
-<script src="/assets/js/shop/wishlist.js"></script>
+<script src="/assets/js/shop/shopping.js"></script>
+<!-- <script src="/assets/js/shop/wishlist.js"></script> -->
