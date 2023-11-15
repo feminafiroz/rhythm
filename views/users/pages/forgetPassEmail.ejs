@@ -1,8 +1,11 @@
+<%- include('../partials/flash.ejs') %>
+
 <div class="register-area ptb-100">
     <div class="container-fluid">
         <div class="row">
+            
             <div class="col-md-12 col-12 col-lg-6 col-xl-6 ms-auto me-auto">
-                <%- include('../partials/flash.ejs') %>
+          
                 
                     <h1 class="cart-heading">forgot password</h1>
                     <div class="login">
@@ -29,6 +32,21 @@
     </div>
 </div>
 </div>
+<style>
+    .alert {
+    width: 46%;
+    margin: auto;
+    margin-top: 37px;
+    margin-bottom: -72px;
+}
+
+@media (max-width: 600px) {
+  .alert {
+    width: 100%;
+  }
+}
+
+</style>
 <script>
     const alert = document.getElementById('message')
     setTimeout(() => {
@@ -64,4 +82,4 @@
         }
         return true;
     }
-</script>
+</script>   

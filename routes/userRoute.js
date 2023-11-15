@@ -46,7 +46,6 @@ userRoute.get('/logout', ensureAuthenticated, userController.userLogout);
 userRoute.get('/contact', userController.contact);
 userRoute.get('/about', userController.aboutUs);
 userRoute.get('/profile', ensureAuthenticated, userController.userProfile);
-// userRoute.post('/shop/search', userController.search);
 
 
 
@@ -66,9 +65,6 @@ userRoute.get("/wallet/:id",ensureAuthenticated, userController.walletTransactio
 userRoute.get('/cart', ensureAuthenticated, cartController.cartpage);
 userRoute.get('/cart/add/:id',validateID, ensureAuthenticated, cartController.addToCart);
 userRoute.get('/remove/:id',validateID, ensureAuthenticated, cartController.removeFromCart);
-// userRoute.post('/updateCartItem/:id',
-// validateID, ensureAuthenticated, 
-// cartController.updateCartItemQuantity);
 userRoute.get('/cart/inc/:id', ensureAuthenticated,  cartController.incQuantity);
 userRoute.get('/cart/dec/:id', ensureAuthenticated, cartController.decQuantity);
 
@@ -81,13 +77,13 @@ userRoute.get('/editAddress/:id',  ensureAuthenticated, addressController.editAd
 userRoute.post('/editAddress/:id', ensureAuthenticated, addressController.updateAddress)
 userRoute.get('/deleteAddress/:id', ensureAuthenticated, addressController.deleteAddress)
 
-
 // Order Routes
 userRoute.get("/orders", orderController.orderspage);
 userRoute.get("/orders/:id", orderController.singleOrder);
 userRoute.put("/orders/:id", orderController.cancelOrder);
 userRoute.put("/orders/single/:id", orderController.cancelSingleOrder);
 userRoute.post("/orders/return/:id", orderController.returnOrder);
+userRoute.get("/orders/download/:id", orderController.donwloadInvoice);
 
 
 //checkout routes
