@@ -137,32 +137,3 @@
         alert.style.display = 'none'
     }, 100000);
 </script>
-
-<!-- <script>
-    // Set the initial time to 60 seconds (1 minute)
-    let timerSeconds = 30;
-
-    // Function to update the timer display
-    function updateTimer() {
-        const timerElement = document.getElementById("timer");
-        timerElement.textContent = `Timer: ${Math.floor(timerSeconds / 60)}:${(timerSeconds % 60)
-            .toString()
-            .padStart(2, "0")}`;
-
-        if (timerSeconds >= 0) { // Change the condition to >= 0
-
-            document.getElementById("otpverify").setAttribute("disabled", true); // Disable the Verify OTP button
-        }
-        
-        if (timerSeconds > 0) { // Continue the countdown as long as timerSeconds is greater than 0
-            timerSeconds--;
-            setTimeout(updateTimer, 1000); // Update the timer every 1 second
-        }
-    }
-    updateTimer();
-
-    const alert = document.getElementById('message')
-    setTimeout(() => {
-        alert.style.display = 'none'
-    }, 4000);
-</script> -->
