@@ -2,7 +2,7 @@
     style="background-image: url(/assets/img/bg/ff.jpg); alt :no image ;background-size : 1600px 500px; ">
     <div class="container">
         <div class="breadcrumb-content text-center">
-            <h2> SHOP</h2>
+            <h2 > SHOP</h2>
             <ul>
                 <li><a href="/">home</a></li>
                 <li>shop grid</li>
@@ -10,6 +10,17 @@
         </div>
     </div>
 </div>
+<!-- <div class="breadcrumb-area" style="background-color: black; color: white;">
+    <div class="container">
+        <div class="breadcrumb-content text-center pt-1">
+            <ul>
+                <li>
+                    <h3 style="color: white;">Shop </h3>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div> -->
 
 <!-- <div class="breadcrumb-area" style="background-color: black; color: white;">
     <div class="container">
@@ -33,7 +44,6 @@
     <div class="container-fluid">
         <div class="row gy-5">
             <div class="col-lg-3 order-2 order-lg-1">
-
                 <div class="shop-sidebar mr-50">
                     <div class="sidebar-widget mb-50">
                         <h3 class="sidebar-title">Search Products</h3>
@@ -90,8 +100,6 @@
             <div class="col-lg-9 order-1 order-lg-2">
                 <div class="shop-product-wrapper res-xl">
                     <div class="shop-bar-area">
-                        <div class="shop-bar pb-60">
-                        </div>
                         <div class="shop-product-content tab-content">
                             <div id="grid-sidebar3" class="tab-pane fade active show">
                                 <div class="row">
@@ -149,14 +157,15 @@
                                                                                 <% if
                                                                                     (userWishlist.includes(element._id))
                                                                                     { %>
-                                                                                    <i class="pe-7s-like"
+                                                                                    <i class="pe-7s-like" id="wishlist"
                                                                                         style="color: red;"></i>
                                                                                     <% } else { %>
                                                                                         <i class="pe-7s-like"></i>
                                                                                         <% } %>
                                                                             </a>
                                                                             <% } else { %>
-                                                                                <a class="btn-hover list-btn-wishlist"
+                                                                                <a class=" animate-right" id="wishlist"
+                                                                                title="Wishlist"
                                                                                     href="/login"> <i
                                                                                         class="pe-7s-like"></i></a>
                                                                         <% } %>

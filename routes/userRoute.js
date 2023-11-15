@@ -27,6 +27,13 @@ userRoute.post('/sendOTP', ensureNotAuthenticated, userController.verifyOTP);
 userRoute.get('/reSendOTP', ensureNotAuthenticated, userController.reSendOTP); /* otp Resending */
 userRoute.post('/reSendOTP', ensureNotAuthenticated, userController.verifyResendOTP);
 
+
+// forget-Password and reset password section
+userRoute.get('/forgetPassword', ensureNotAuthenticated, userController.forgotPasswordpage);
+userRoute.post('/forgetPassword', ensureNotAuthenticated, userController.sendResetLink);
+userRoute.get('/resetPassword/:token', ensureNotAuthenticated, userController.resetPassPage);
+userRoute.put('/resetPassword/:token', ensureNotAuthenticated, userController.resetPassword);
+
 // Login & Verification section---
 userRoute.get('/login', ensureNotAuthenticated, userController.loadLogin);
 userRoute.post('/login', ensureNotAuthenticated,

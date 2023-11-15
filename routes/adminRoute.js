@@ -3,7 +3,6 @@ const adminRoute = express.Router();
 const adminController = require("../controller/adminControl")
 const categoryController = require('../controller/categoryControl')
 const productController = require('../controller/productControl')
-// const orderController = require('../controller/orderControl')
 const { upload } = require('../config/upload')
 const { isAdminLoggedIn, isAdminLoggedOut } = require('../middlewares/adminAuth')
 const nocache = require('nocache')
@@ -48,19 +47,12 @@ adminRoute.get('/products', isAdminLoggedIn, productController.productManagement
 adminRoute.post('/product/list/:id', isAdminLoggedIn, productController.listProduct)
 adminRoute.post('/product/unList/:id', isAdminLoggedIn, productController.unListProduct)
 adminRoute.get('/product/editproduct/:id', isAdminLoggedIn, productController.editProductPage)
-// adminRoute.post('/product/editproduct/:id',
-//     upload.fields([
-//         { name: "secondaryImage" }
-//         , { name: "primaryImage" }]),
-//     productController.updateProduct)
 adminRoute.post('/product/editproduct/:id', productController.updateProduct)
 adminRoute.put('/product/edit-image/:id', upload.single("image"), productController.editImage)
 adminRoute.delete('/product/delete-image/:id', productController.deleteImage)
 
 
 // OrderManagement--
-
-
 adminRoute.get("/orders", adminController.ordersPage);
 adminRoute.get("/orders/:id", adminController.editOrder);
 adminRoute.put("/orders/update/:id", adminController.updateOrderStatuss);

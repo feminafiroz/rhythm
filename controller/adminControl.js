@@ -124,7 +124,6 @@ const userManagement = expressHandler(async(req,res)=>{
 const searchUser = expressHandler(async(req,res)=>{
 
     try {
-     
         const  data = req.body.search
         const searching = await User.find({userName:{$regex: data , $options: 'i' }});
         if(searching){
@@ -132,8 +131,6 @@ const searchUser = expressHandler(async(req,res)=>{
         }else{
             res.render('./admin/pages/userList',{title:'Search'})
         }
-            
-       
     } catch (error) {
         throw new Error(error) 
     }
@@ -178,8 +175,6 @@ const unBlockUser = expressHandler(async (req, res) => {
         res.status(500).json({ message: "Error while unblocking the user" });
     }
 });
-
-
 
 
 
