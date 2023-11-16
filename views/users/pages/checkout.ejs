@@ -46,12 +46,12 @@
                                                     id="address<%= index %>" value="<%= item._id %>" required <%= index ===
                                                     0 ? "checked" : "" %> />
                                                     <label class="form-check-label" for="address<%= index %>">
-                                                        <h5 class="card-title"><%= item.title %></h5>
+                                                        <h5 class="card-title"><%= item.name %></h5>
                                                         <p class="card-text">
-                                                            <%= item.street %>, <%= item.city %>, <%= item.state %>, <%=
+                                                            <%= item.address %>, <%= item.town %>, <%= item.state %>, <%=
                                                             item.pincode %>
                                                         </p>
-                                                        <p class="card-text">Mobile: +91 <%= item.mobile %></p>
+                                                        <p class="card-text">Mobile: +91 <%= item.phone %></p>
                                                     </label>
                                                 </div>
                                             </div>
@@ -297,6 +297,7 @@
             try {
                 const originalCartData = JSON.parse(document.getElementById("originalCartData").value);
                 const response = await fetch("/checkout/get");
+                console.log(response);
 
                 if (!response.ok) {
                     throw new Error("Network response was not ok");
