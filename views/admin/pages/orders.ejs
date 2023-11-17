@@ -28,7 +28,7 @@
                                     <td class="align-middle"><%= index + 1 %></td>
                                     <td class="align-middle"><%= order.orderId %></td>
                                     <td class="align-middle">
-                                        <%= order.shippingAddress %>, <%= order.city %>, <%= order.zip %>
+                                        <%= order.shippingAddress %>, <%= order.town %>, <%= order.postCode %>
                                     </td>
                                     <td class="align-middle">
                                         <%= new Date(order.orderedDate).toLocaleDateString('en-US', { year: 'numeric', month:

@@ -361,7 +361,7 @@ const updateCoupon = asyncHandler(async (req, res) => {
             if (coupon.usedBy.includes(userid)) {
                 res.status(202).json({
                     status: "danger",
-                    message: "The coupon is alrady used",
+                    message: "The coupon is already used",
                 });
             } else if (subtotal < coupon.minAmount) {
                 res.status(200).json({
