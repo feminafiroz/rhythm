@@ -28,6 +28,7 @@ userRoute.get('/reSendOTP', ensureNotAuthenticated, userController.reSendOTP); /
 userRoute.post('/reSendOTP', ensureNotAuthenticated, userController.verifyResendOTP);
 
 
+
 // forget-Password and reset password section
 userRoute.get('/forgetPassword', ensureNotAuthenticated, userController.forgotPasswordpage);
 userRoute.post('/forgetPassword', ensureNotAuthenticated, userController.sendResetLink);
@@ -46,6 +47,8 @@ userRoute.get('/logout', ensureAuthenticated, userController.userLogout);
 userRoute.get('/contact', userController.contact);
 userRoute.get('/about', userController.aboutUs);
 userRoute.get('/profile', ensureAuthenticated, userController.userProfile);
+// userRoute.put('/profile/updateUserName', ensureAuthenticated, userController.editUserName);
+userRoute.post('/edit-profile', ensureAuthenticated,userController. editProfilePost);
 
 
 

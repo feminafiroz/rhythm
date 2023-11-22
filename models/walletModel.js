@@ -10,6 +10,12 @@ const walletSchema = new mongoose.Schema({
         type: Number,
         default: 0,
     },
+    transactions: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'WalletTransaction',
+        },
+    ],
 });
 
 module.exports = mongoose.model("Wallet", walletSchema);

@@ -27,6 +27,7 @@ const userSchema = new Schema({
         quantity: Number,
     }],
     addresses: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Address' }],
+    // wallet: { type: mongoose.Schema.Types.ObjectId, ref: 'Wallet' }, 
     passwordChangedAt: Date,
     passwordResetToken: String,
     passwordResetTokenExpires: Date,

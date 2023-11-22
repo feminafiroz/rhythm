@@ -584,6 +584,26 @@ const walletTransactionspage = asyncHandler(async (req, res) => {
     }
 });
 
+// Edit users name
+//edit profile ---
+async function editProfilePost(req, res) {
+    // Get the user's current information.
+    const userId =req.user.id;
+    const user = await User.findOne({ _id: userId });
+
+    // Get the user's updated information.
+    const newuserName = req.body.userName;
+    const newEmail = req.body.email;
+
+
+    // Update the user's information.
+    user.userName = newuserName;
+    user.email = newEmail;
+    await user.save();
+
+    // Return a success response.
+    res.redirect('/profile')
+}
 
 module.exports = {
     loadLandingPage,
@@ -610,7 +630,8 @@ module.exports = {
     forgotPasswordpage,
     sendResetLink,
     resetPassPage,
-    resetPassword
+    resetPassword,
+    editProfilePost
 
 
 }

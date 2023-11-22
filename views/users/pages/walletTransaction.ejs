@@ -1,6 +1,7 @@
 <div class="container mt-4">
     <h1 class="mb-4">Wallet Transactions</h1>
     <!-- Table to display transactions -->
+    <% if (walletTransactions.length>0) { %>
     <table class="table table-bordered">
         <thead>
             <tr>
@@ -28,4 +29,8 @@
             <% }) %>
         </tbody>
     </table>
+    <% } else { %>
+        <h2 class="text-center mb-4">No Transactions yet</h2>
+
+        <% } %>
 </div>
