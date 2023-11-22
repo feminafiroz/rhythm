@@ -1,0 +1,178 @@
+
+        <!-- header end -->
+        <div class="slider-area">
+            <div class="slider-active owl-carousel">
+                <div class="single-slider-4 slider-height-6 bg-img" style="background-image: url(assets/img/slider/77.jpg)">
+                    <div class="container">
+                        <div class="row">
+                            <div class="ms-auto col-lg-6">
+                                <div class="furniture-content fadeinup-animated">
+                                    <h2 class="animated text-white">Amplify your  <br>Passion.</h2>
+                                    <p class="animated text-white">Unlock the Sound of Your Dreams, Shipped to You!.</p>
+                                    <a class="furniture-slider-btn btn-hover animated text-white" href="product-details.html">Shop Now</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="single-slider-4 slider-height-6 bg-img" style="background-image: url(assets/img/slider/197.jpg)">
+                    <div class="container">
+                        <div class="row">
+                            <div class="ms-auto col-lg-6">
+                                <div class="furniture-content fadeinup-animated">
+                                    <h2 class="animated text-white">Unleash Your   <br>Inner Rockstar.</h2>
+                                    <p class="animated text-white">Elevate your music with our expertly selected guitars, delivered to your doorstep, making dreams reality.</p>
+                                    <a class="furniture-slider-btn btn-hover animated text-white" href="product-details.html">Shop Now</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- product area start -->
+        <div class="popular-product-area wrapper-padding-3 pt-115 pb-115">
+            <div class="container-fluid">
+                <div class="section-title-6 text-center mb-50">
+                    <h2>Popular Guitar</h2>
+                    <p>Discover a harmonious blend of quality craftsmanship and musical excellence. Our collection of guitars represents the industry's standard for innovation and style, ensuring an unmatched experience for every musician.</p>
+                </div>
+                
+                <div class="product-style">
+                  
+                    <div class="popular-product-active owl-carousel">
+                        <% if (products.length>0) { %>
+                            <% products.forEach(element=> { %>
+                        <div class="product-wrapper">
+                            <% if (Array.isArray(element.images) && element.images.length> 0) { %>
+
+                            <div class="product-img">
+                                <a href="/viewProduct/<%= element._id %>">
+                                    <img src="<%= element.images[0].imageUrl %>" alt="">
+                                </a>
+                                <% } %>
+                                <div class="product-action">
+                                    <!-- <a class="animate-left" title="Wishlist" href="#">
+                                        <i class="pe-7s-like"></i>
+                                    </a> -->
+
+                                    <% if(!user) {%>
+                                        <a class="animate-top" title="Add To Cart" href="/login">
+                                            <i class="pe-7s-cart"></i>
+                                        </a>
+                                        <% } %>
+                                    <a class="animate-right" title="Quick View" href="/viewProduct/<%= element?._id %>">
+                                        <i class="pe-7s-look"></i>
+                                        
+                                    </a>
+                                    
+                                </div>
+                            </div>
+                            <div class="funiture-product-content text-center">
+                                <h4><b><a href="/viewProduct/<%= element._id%>">  <%= element.title %></a></b></h4>
+                                <!-- <span>$90.00</span> -->
+                                <p class="text-decoration-line-through">₹<%=
+                                    (element.productPrice).toLocaleString() %>
+                            </p>
+                            <h5>₹<%=( element.salePrice).toLocaleString() %>
+                            </h5>
+                            </div>
+                        </div>
+                        <% }); %>
+                        <% } else { %>
+                            <h2>No Products</h2>
+                            <% } %>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- product area end -->
+        <!-- discount area start -->
+        <div class="discount-area pt-70 pb-120">
+            <div class="container">
+                <div class="row">
+                    <div class="ms-auto col-lg-7">
+                        <div class="discount-img pl-70">
+                            <img src="assets/img/slider/12222.jpg" alt="">
+                        </div>
+                    </div>
+                    <div class="col-lg-5">
+                        <div class="discount-details-wrapper">
+                            <h5>Verified quality</h5>
+                            <p>Discover excellence with our guitars, setting the standard for quality.</p>
+                            <h2>Summer Discount <br>Up to 30%</h2>
+                            <p class="discount-peragraph">Explore the rhythm of savings! It's a well-established fact that the readable content of a page enhances your shopping experience.</p>
+                            <a class="discount-btn btn-hover" href="/shop">Buy Now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- discount area end -->
+        <!-- premium area start -->
+        <div class="premium-banner-area">
+            <div class="container">
+                <div class="discount-wrapper">
+                    <img src="assets/img/slider/80.jpeg" alt="">
+                    <div class="discount-content">
+                        <h2>Rhythm  the <br>Chords</h2>
+                        <a href="#">Learn More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- premium area end -->
+        <!-- product area start -->
+
+        <!-- product area end -->
+        <!-- testimonials area start -->
+        <div class="testimonials-area pt-120 pb-115">
+            <div class="container">
+                <div class="testimonials-active owl-carousel">
+                    <div class="single-testimonial-2 text-center">
+                        <img src="assets/img/team/1.png" alt="">
+                        <p>Strumming the strings of the soul, the guitar weaves melodies that echo the emotions of the heart.Someone told me the smile on my face gets bigger when I play the guitar.</p>
+
+                        <img src="assets/img/team/2.png" alt="">
+                        <h4> Varshar Arif</h4>
+                        <span>Guitarist</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- testimonials area end -->
+        <!-- services area start -->
+        <div class="services-area wrapper-padding-4 gray-bg pt-120 pb-80">
+            <div class="container-fluid">
+                <div class="services-wrapper">
+                    <div class="single-services mb-40">
+                        <div class="services-img">
+                            <img src="assets/img/icon-img/26.png" alt="">
+                        </div>
+                        <div class="services-content">
+                            <h4>Free Shippig</h4>
+                            <p>Contrary to popular belief, Lorem Ipsum is random text. </p>
+                        </div>
+                    </div>
+                    <div class="single-services mb-40">
+                        <div class="services-img">
+                            <img src="assets/img/icon-img/27.png" alt="">
+                        </div>
+                        <div class="services-content">
+                            <h4>24/7 Support</h4>
+                            <p>Contrary to popular belief, Lorem Ipsum is random text. </p>
+                        </div>
+                    </div>
+                    <div class="single-services mb-40">
+                        <div class="services-img">
+                            <img src="assets/img/icon-img/28.png" alt="">
+                        </div>
+                        <div class="services-content">
+                            <h4>Secure Payments</h4>
+                            <p>Contrary to popular belief, Lorem Ipsum is random text. </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- services area end -->

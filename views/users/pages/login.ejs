@@ -1,0 +1,57 @@
+       
+<div class="breadcrumb-area" style="background-color: black; color: white;">
+    <div class="container">
+        <div class="breadcrumb-content text-center pt-1">
+            <ul>
+                <li>
+                    <h3 style="color: white;">Login  </h3>
+                </li>
+              
+                
+            </ul>
+        </div>
+    </div>
+</div>
+        <!-- login-area start -->
+        <%- include('../partials/flash.ejs') %>
+        <div class="register-area ptb-100">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12 col-12 col-lg-6 col-xl-6 ms-auto me-auto">
+                        <div class="login bg-light">
+                            <div class="login-form-container">
+                                <div class="login-form">
+                                    <form action="#" method="post" >
+                                        <input id="email" type="email" name="email" placeholder="email" required>
+                                        
+                                        <input id="password" type="password" name="password" placeholder="Password" required>
+                                        
+                                        <div class="button-box">
+                                            <div class="login-toggle-btn">
+                                                <input type="checkbox">
+                                                <label>Remember me</label>
+                                                <a href="/forgetPassword">Forgot Password?</a>
+                                            </div>
+                                            
+                                            <button type="submit" class="default-btn ">Login</button>
+                                            <br><br>
+                                            <div class="text-center">
+                                            <a href="/register">Don't have an account ? Register now</a>
+                                        </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+       
+        <!-- login-area end -->
+
+<style>
+    .button-box .default-btn {
+    margin-left: 234px;
+    }
+</style>

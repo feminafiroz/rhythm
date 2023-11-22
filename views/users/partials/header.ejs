@@ -1,0 +1,106 @@
+
+        <header>
+            <div class="header-top-furniture wrapper-padding-2 res-header-sm">
+                <div class="container-fluid">
+                    <div class="header-bottom-wrapper">
+                        <div class="logo-2 furniture-logo ptb-30">
+                            
+                                <a href="/">
+                                    <img src="/assets/img/logo/123.png" alt="" style="max-width: 130px; height: auto;">
+                                </a>
+                            </div>
+                            
+                        <div class="menu-style-2 furniture-menu menu-hover">
+                            <nav>
+                                <ul>
+                                    <li><a href="/">home</a></li>
+                                    <li><a href="/shop">Shop</a>
+                                    </li>
+                                    <li><a href="/about">About Us</a>
+                                    </li>
+                                    <li><a href="/contact">contact</a></li>
+                                </ul>
+                            </nav>
+                        </div>
+                        
+                        <div class="header-cart">
+                           <% if(!user) {%>
+                            <a class="icon-cart-furniture" href="/login">
+                                <i class="ti-shopping-cart"></i>
+                            </a>
+                            <% } else {%>
+                                
+                                <!-- <a class="dropdown-item" href="/savedAddress">Addresses</a> -->
+                                <a class="icon-cart-furniture" href="/cart">
+                                    <i class="ti-shopping-cart"></i>
+                                </a>
+                                <% }%>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="mobile-menu-area d-md-block col-md-12 col-lg-12 col-12 d-lg-none d-xl-none">
+                            <div class="mobile-menu">
+                                <nav id="mobile-menu-active">
+                                    <ul class="menu-overflow">
+                                        <li><a href="/">home</a></li>
+                                        <li><a href="/shop">Shop</a>
+                                        </li>
+                                        <li><a href="/about">About Us</a>
+                                        </li>
+                                        <li><a href="/contact">contact</a></li>
+                                    </ul>
+                                </nav>							
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="header-bottom-furniture wrapper-padding-2 border-top-3">
+                <div class="container-fluid">
+                    <div class="furniture-bottom-wrapper">
+                       
+                              <div class="furniture-login">
+                                <ul>
+                                    <% if (!user) { %>
+                                        <li>Get Access: <a href="/login">Login</a></li>
+                                        <li><a href="/register">Register</a></li>
+                                        
+                                    <% } else { %>
+                         
+                                        <li><a href="/logout">Logout</a></li>
+
+                                    <% } %>
+                                </ul>
+                            </div>
+                              
+                        <!-- </div> -->
+                        <div class="furniture-search">
+                            <form action="#">
+                                <input placeholder="" type="text">
+                                <button>
+                                    <!-- <i class="ti-search"></i> -->
+                                </button>
+                            </form>
+                        </div>
+                        <div class="furniture-wishlist">
+                            <ul>   <% if(!user) {%>
+                                
+                                <li><a href="/login"><i class="ti-heart"></i> Wishlist</a></li>
+                                <% } else {%>
+                                <li><a href="/wishlist"><i class="ti-heart"></i> Wishlist</a></li>
+                                <% } %>
+                                <% if(!user) {%>
+                                <li><a href="/profile"><i class="ti-user"></i> Profile</a></li>
+                            <% } else {%>
+                                <li><a href="/profile"><i class="ti-user"></i> <%= user.userName %></a></li>
+
+                                <% } %>
+
+                            </ul>
+                        </div>
+
+                    </div>
+                    <div class="border-top-3"></div>
+                </div>
+            </div>
+        </header>

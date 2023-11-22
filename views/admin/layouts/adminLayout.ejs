@@ -1,0 +1,185 @@
+<!DOCTYPE HTML>
+<html lang="en">
+
+
+<!-- Mirrored from wp.alithemes.com/html/evara/evara-backend/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 01 Aug 2021 15:32:35 GMT -->
+
+<head>
+    <meta charset="utf-8">
+    <title>
+        <%= title %>
+    </title>
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta property="og:title" content="">
+    <meta property="og:type" content="">
+    <meta property="og:url" content="">
+    <meta property="og:image" content="">
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="/admin/assets/imgs/theme/favicon.svg">
+    <!-- Template CSS -->
+    <link href="/admin/assets/css/main.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- Table Link -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+    <style>
+        .fa-list-alt{
+            color: #adb5bd;
+        }
+        .text{
+            color: black;
+            font-weight: 400;
+        }
+        .menu-item{
+        text-decoration: none;
+        }
+        a {
+          /* Your CSS styles here */
+          text-decoration: none !important;
+        
+        }
+        .logo-img{
+            max-width: 100px;
+            max-height: 100px;
+        }
+        
+        </style>
+  
+    
+
+
+
+</head>
+
+<body>
+
+
+    <% if (title==="Login" ) { %>
+        <%- body %>
+            <% } else { %>
+        //sidebar
+        <div class="screen-overlay"></div>
+<aside class="navbar-aside" id="offcanvas_aside">
+    <div class="aside-top">
+        <a href="/admin/dashboard" class="brand-wrap">
+             <img class="logo-img" src="/admin/assets/imgs/theme/logo1.png" class="logo" alt="Evara Dashboard" style="width: 400px; ">
+
+        </a>
+        <div>
+            <button class="btn btn-icon btn-aside-minimize"> <i class="text-muted material-icons md-menu_open"></i> </button>
+        </div>
+    </div>
+    <nav>
+        <ul class="menu-aside">
+            <li class="menu-item ">
+                <a class="menu-link" href="/admin/dashboard"> <i class="icon material-icons md-home"></i>
+                    <span class="text">Dashboard</span>
+                </a>
+            </li>
+            <li class="menu-item ">
+                <a class="menu-link" href="/admin/user"> <i class="icon material-icons md-person"></i>
+                    <span class="text">Users</span>
+                </a>
+                
+            </li>
+            <li class="menu-item ">
+                <a class="menu-link" href="/admin/products"> <i class="icon material-icons md-shopping_bag"></i>
+                    <span class="text">Products</span>
+                </a>
+                
+            </li>
+           
+            <li class="menu-item ">
+                <a class="menu-link" href="/admin/orders"> <i class="icon material-icons md-shopping_cart"></i>
+                    <span class="text">Orders</span>
+                </a>
+              
+            </li>
+            <li class="menu-item ">
+                <a class="menu-link" href="/admin/category"> <i class="icon material-icons md-comment"></i>
+                    <span class="text">Category</span>
+                </a>
+               
+            </li>
+            <li class="menu-item ">
+                <a  class="menu-link" href="/admin/product/addProduct" > <i class="icon material-icons md-add_box"></i>
+                    <span class="text">Add product</span>
+                </a>
+
+            </li>
+            <li class="menu-item ">
+                <a  class="menu-link" href="/admin/sales-report" > <i class="icon material-icons md-monetization_on"></i>
+                    <span class="text">Sales</span>
+                </a>
+
+            </li>
+           
+            <li class="menu-item">
+                <a class="menu-link" href="/admin/coupon"> <i class="icon material-icons md-stars"></i>
+                    <span class="text">Coupons</span> </a>
+            </li>
+           
+        </ul>
+        <hr>
+       
+        <br>
+        <br>
+    </nav>
+</aside>
+
+
+                   //navbar
+                    
+    <main class="main-wrap">
+        <header class="main-header navbar">
+           
+            <div class="col-nav  ms-auto ">
+                <button class="btn btn-icon btn-mobile me-auto" data-trigger="#offcanvas_aside"> <i class="material-icons md-apps"></i> </button>
+                <ul class="nav">
+                    <li class="nav-item">
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn-icon darkmode" href="#"> <i class="material-icons md-nights_stay"></i> </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="requestfullscreen nav-link btn-icon"><i class="material-icons md-cast"></i></a>
+                    </li>
+                  
+                    <li class="dropdown nav-item dropleft">
+                        <a class="dropdown-toggle" data-bs-toggle="dropdown" href="#" id="dropdownAccount" aria-expanded="false"> <img class="img-xs rounded-circle" src="/admin/assets/imgs/people/avatar2.jpg" alt="User"></a>
+                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownAccount">
+                            <a class="dropdown-item text-danger" href="/admin/logout"><i class="material-icons md-exit_to_app"></i>Logout</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </header>
+                        <%- body%>
+                      <%  } %>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+<script src="/admin/assets/js/vendors/jquery-3.6.0.min.js"></script>
+<script src="/admin/assets/js/vendors/bootstrap.bundle.min.js"></script>
+<script src="/admin/assets/js/vendors/select2.min.js"></script>
+<script src="/admin/assets/js/vendors/perfect-scrollbar.js"></script>
+<script src="/admin/assets/js/vendors/jquery.fullscreen.min.js"></script>
+<script src="/admin/assets/js/vendors/chart.js"></script>
+<!-- Main Script -->
+<script src="/admin/assets/js/main.js" type="text/javascript"></script>
+<script src="/admin/assets/js/custom-chart.js" type="text/javascript"></script>
+
+</body>
+
+</html>
